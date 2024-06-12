@@ -15,7 +15,7 @@ class NetworkService {
     private let localhost = "http://127.0.0.1:8080"
     
     // Создание игровой комнаты.
-    func createGameRoom(adminNickname: String, roomCode: String) async throws -> GameRoom {
+    func createGameRoom(adminNickname: String, roomCode: String?) async throws -> GameRoom {
         let dto = GameRoomDTO(adminNickname: adminNickname, roomCode: roomCode, gameStatus: "Not started", currentNumberOfChips: 40)
         
         guard let url = URL(string: "\(localhost)\(APIMethod.createGameRoom.rawValue)") else {
@@ -29,7 +29,7 @@ class NetworkService {
         // TODO: Внимание! Это пока заглушки! Когда будет готов модуль с авторизацией, из него нужно взять:
         // api key и JWT токен соответственно.
         request.addValue("5b570c08-e48a-49de-bee0-e138b8170176", forHTTPHeaderField: "ApiKey")
-        request.addValue("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTgyMTE0OTIuODA1MDU2LCJ1c2VySUQiOiI3ODFDMzU2OS1BOEU3LTQ0M0YtQTgzOC0yOTE0MTE3RjlCNzMifQ.G5IW4FQ1iIL5wGEqm2NwYztsGPzNSzjA-5Uasgm5FwI", forHTTPHeaderField: "Authorization")
+        request.addValue("Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MTgyMjIwNDguNTk0NDMsInVzZXJJRCI6Ijc4MUMzNTY5LUE4RTctNDQzRi1BODM4LTI5MTQxMTdGOUI3MyJ9.lrk0FA7piGSTWsjRCQYC3T7dwkasCtongJF1KGolLtE", forHTTPHeaderField: "Authorization")
         
         let encoder = JSONEncoder()
         let data = try encoder.encode(dto)
@@ -50,7 +50,7 @@ class NetworkService {
 
 struct GameRoomDTO: Codable {
     let adminNickname: String
-    let roomCode: String
+    let roomCode: String?
     let gameStatus: String
     let currentNumberOfChips: Int
 }
