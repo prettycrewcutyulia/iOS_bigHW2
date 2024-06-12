@@ -7,18 +7,20 @@
 
 import SwiftUI
 
-struct NextButtonView: View {
+struct ButtonView: View {
+    @Binding var buttonText: String
+    @Binding var buttonColor: Color
+    
     let isDisabled: Bool
     let action: () -> Void
     
     public var body: some View {
         Button(action: action, label: {
-            Text("Next")
+            Text("\(buttonText)")
                 .foregroundStyle(.white)
-                .font(.custom("Marcellus-Regular", size: 20))
         })
         .frame(width: 352, height: 65)
-        .background(Color.black)
+        .background(buttonColor)
         .opacity(isDisabled ? 0.6 : 1)
 
         .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
