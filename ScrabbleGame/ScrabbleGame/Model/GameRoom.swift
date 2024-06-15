@@ -11,6 +11,6 @@ struct GameRoom: Identifiable, Codable {
     let id: String
     let adminNickname: String
     let roomCode: String?
-    let gameStatus: String
-    let currentNumberOfChips: Int
+    var gameStatus: String
+    var currentNumberOfChips: Int
 }

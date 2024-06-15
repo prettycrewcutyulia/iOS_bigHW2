@@ -87,7 +87,7 @@ struct CreateGameRoomView: View {
         })
         .fullScreenCover(isPresented: $showGameRoom) {
             if let unwrappedGameRoom = gameRoom {
-                GameRoomView(gameRoom: Binding.constant(unwrappedGameRoom))
+                GameRoomView(gameRoom: unwrappedGameRoom)
             }
         }
     }

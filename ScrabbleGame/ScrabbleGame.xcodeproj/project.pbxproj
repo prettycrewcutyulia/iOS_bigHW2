@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A912A2F42C1DE864009B1091 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2F32C1DE864009B1091 /* Enums.swift */; };
 		A9FBADB62C19DD66001D802F /* ScrabbleGameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FBADB52C19DD66001D802F /* ScrabbleGameApp.swift */; };
 		A9FBADB82C19DD66001D802F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FBADB72C19DD66001D802F /* ContentView.swift */; };
 		A9FBADBA2C19DD67001D802F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9FBADB92C19DD67001D802F /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A912A2F32C1DE864009B1091 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		A9FBADB22C19DD66001D802F /* ScrabbleGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrabbleGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9FBADB52C19DD66001D802F /* ScrabbleGameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrabbleGameApp.swift; sourceTree = "<group>"; };
 		A9FBADB72C19DD66001D802F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 		A9FBADB42C19DD66001D802F /* ScrabbleGame */ = {
 			isa = PBXGroup;
 			children = (
+				A912A2F32C1DE864009B1091 /* Enums.swift */,
 				A9FBADCA2C19E79C001D802F /* Views */,
 				A9FBADC92C19E763001D802F /* Services */,
 				A9FBADC82C19E74D001D802F /* Model */,
@@ -204,6 +207,7 @@
 				A9FBADCE2C19F0D9001D802F /* CustomTextViews.swift in Sources */,
 				A9FBADCC2C19E7B3001D802F /* CreateGameRoomView.swift in Sources */,
 				A9FBADB62C19DD66001D802F /* ScrabbleGameApp.swift in Sources */,
+				A912A2F42C1DE864009B1091 /* Enums.swift in Sources */,
 				A9FBADD42C19F5B3001D802F /* GameRoomView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

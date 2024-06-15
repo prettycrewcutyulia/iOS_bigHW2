@@ -8,41 +8,60 @@
 import SwiftUI
 
 struct GameRoomView: View {
-    @Binding var gameRoom: GameRoom
+    @State var gameRoom: GameRoom
+
     @State var leaveRoom: Bool = false
     
     @State var buttonText: String = GameButtonText.StartGame.rawValue
     @State var buttonColor: Color = .green
-    
+    @State var showErrorAlert: Bool = false
+
     var body: some View {
         NavigationStack {
+            // TODO: В зависимости от того админ или нет показывать тот или иной экран
             GameTopBar(gameRoom: $gameRoom, leaveRoom: $leaveRoom)
             Spacer()
+            // Доступно только админу
             ButtonView(buttonText: $buttonText, buttonColor:  $buttonColor, isDisabled: false) {
                 changeGameStatus(buttonText: buttonText)
                 // TODO: записать в бд статус комнаты
             }
             Spacer()
         }
+        .alert(isPresented: $showErrorAlert, content: {
+            return Alert(title: Text("Произошла ошибка при смене статуса игры"), dismissButton: .default(Text("Ok")))
+        })
     }
     
+    // MARK: Смена статуса игры.
     func changeGameStatus(buttonText: String) {
         if buttonText == GameButtonText.StartGame.rawValue {
             self.buttonText = GameButtonText.PauseGame.rawValue
             self.buttonColor = .gray
-            // Менять статус игры
+            Task {
+                do {
+                    gameRoom = try await NetworkService.shared.changeGameStatus(gameStatus: .Running, roomId: gameRoom.id)
+                }
+                catch {
+                    showErrorAlert.toggle()
+                }
+            }
+            
         } else {
             self.buttonText = GameButtonText.StartGame.rawValue
             self.buttonColor = .green
-            // Менять статус игры
-
+            Task {
+                do {
+                    gameRoom = try await NetworkService.shared.changeGameStatus(gameStatus: .Pause, roomId: gameRoom.id)
+                }
+                catch {
+                    showErrorAlert.toggle()
+                }
+            }
         }
     }
-}
-
-enum GameButtonText: String {
-    case StartGame = "Start game"
-    case PauseGame = "Pause game"
+    
+    
 }
 
 struct GameTopBar: View {
@@ -58,7 +77,7 @@ struct GameTopBar: View {
                             Text("Game status:")
                                 .bold()
                             Text("\(gameRoom.gameStatus)")
-                                .foregroundStyle(gameRoom.gameStatus == "Not started" ? .gray : gameRoom.gameStatus == "Started" ? .green : .red)
+                                .foregroundStyle(gameRoom.gameStatus == GameStatus.NotStarted.rawValue ? .gray : gameRoom.gameStatus == GameStatus.Running.rawValue ? .green : gameRoom.gameStatus == GameStatus.Pause.rawValue ? .gray : .red)
                         }
                         HStack {
                             Text("Room admin:")
@@ -95,5 +114,5 @@ struct GameTopBar: View {
 }
 
 #Preview {
-    GameRoomView(gameRoom: Binding<GameRoom>.constant(GameRoom(id: "gameID", adminNickname: "adminNickName", roomCode: "roomCode", gameStatus: "Not started", currentNumberOfChips: 0)))
+    GameRoomView(gameRoom: (GameRoom(id: "gameID", adminNickname: "adminNickName", roomCode: "roomCode", gameStatus: "Not started", currentNumberOfChips: 0)))
 }
