@@ -8,9 +8,10 @@
 import Foundation
 
 struct GameRoom: Identifiable, Codable {
-    let id: String
+    let id: UUID
     let adminNickname: String
     let roomCode: String?
     var gameStatus: String
     var currentNumberOfChips: Int
 }
+
