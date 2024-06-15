@@ -13,7 +13,7 @@ enum GameButtonText: String {
 }
 
 enum GameStatus: String {
-    case NotStarted = "Not started" // default value
+    case NotStarted = "Not Started" // default value
     case Running = "Running"
     case Pause = "Pause"
     case End = "End"

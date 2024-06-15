@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A912A2F42C1DE864009B1091 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2F32C1DE864009B1091 /* Enums.swift */; };
+		A912A2F72C1E00DE009B1091 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2F62C1E00DE009B1091 /* User.swift */; };
+		A912A2FB2C1E058B009B1091 /* AllGameRoomsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2FA2C1E058B009B1091 /* AllGameRoomsView.swift */; };
 		A9FBADB62C19DD66001D802F /* ScrabbleGameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FBADB52C19DD66001D802F /* ScrabbleGameApp.swift */; };
 		A9FBADB82C19DD66001D802F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FBADB72C19DD66001D802F /* ContentView.swift */; };
 		A9FBADBA2C19DD67001D802F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9FBADB92C19DD67001D802F /* Assets.xcassets */; };
@@ -22,6 +24,8 @@
 
 /* Begin PBXFileReference section */
 		A912A2F32C1DE864009B1091 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		A912A2F62C1E00DE009B1091 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A912A2FA2C1E058B009B1091 /* AllGameRoomsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGameRoomsView.swift; sourceTree = "<group>"; };
 		A9FBADB22C19DD66001D802F /* ScrabbleGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrabbleGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9FBADB52C19DD66001D802F /* ScrabbleGameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrabbleGameApp.swift; sourceTree = "<group>"; };
 		A9FBADB72C19DD66001D802F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -91,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				A9FBADC62C19E2D6001D802F /* GameRoom.swift */,
+				A912A2F62C1E00DE009B1091 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -126,6 +131,7 @@
 			children = (
 				A9FBADCB2C19E7B3001D802F /* CreateGameRoomView.swift */,
 				A9FBADD32C19F5B3001D802F /* GameRoomView.swift */,
+				A912A2FA2C1E058B009B1091 /* AllGameRoomsView.swift */,
 			);
 			path = GameRoom;
 			sourceTree = "<group>";
@@ -208,6 +214,8 @@
 				A9FBADCC2C19E7B3001D802F /* CreateGameRoomView.swift in Sources */,
 				A9FBADB62C19DD66001D802F /* ScrabbleGameApp.swift in Sources */,
 				A912A2F42C1DE864009B1091 /* Enums.swift in Sources */,
+				A912A2F72C1E00DE009B1091 /* User.swift in Sources */,
+				A912A2FB2C1E058B009B1091 /* AllGameRoomsView.swift in Sources */,
 				A9FBADD42C19F5B3001D802F /* GameRoomView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

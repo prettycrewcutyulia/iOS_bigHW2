@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct CreateGameRoomView: View {
-    @Binding var adminNickname: String
+    @Binding var user: User
+    
     @State var roomCode: String = ""
     @State var gameRoom: GameRoom? = nil
     
@@ -21,7 +22,7 @@ struct CreateGameRoomView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("\(adminNickname),\ncreate game room")
+                Text("\(user.nickName),\ncreate game room")
                     .font(.largeTitle)
                     .bold()
                     .multilineTextAlignment(.center)
@@ -72,7 +73,7 @@ struct CreateGameRoomView: View {
                     // запрос
                     Task {
                         do {
-                            gameRoom = try await NetworkService.shared.createGameRoom(adminNickname: adminNickname, roomCode: roomCode)
+                            gameRoom = try await NetworkService.shared.createGameRoom(adminNickname: user.nickName, roomCode: roomCode)
                             showGameRoom.toggle()
                         } catch {
                             showErrorAlert.toggle()
@@ -87,12 +88,12 @@ struct CreateGameRoomView: View {
         })
         .fullScreenCover(isPresented: $showGameRoom) {
             if let unwrappedGameRoom = gameRoom {
-                GameRoomView(gameRoom: unwrappedGameRoom)
+                GameRoomView(gameRoom: unwrappedGameRoom, user: $user)
             }
         }
     }
 }
 
-#Preview {
-    CreateGameRoomView(adminNickname: Binding<String>.constant("Irina"))
-}
+//#Preview {
+//    CreateGameRoomView(adminNickname: Binding<String>.constant("Irina"))
+//}

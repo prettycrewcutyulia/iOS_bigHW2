@@ -9,7 +9,8 @@ import SwiftUI
 
 struct GameRoomView: View {
     @State var gameRoom: GameRoom
-
+    @Binding var user: User
+    
     @State var leaveRoom: Bool = false
     
     @State var buttonText: String = GameButtonText.StartGame.rawValue
@@ -19,12 +20,14 @@ struct GameRoomView: View {
     var body: some View {
         NavigationStack {
             // TODO: В зависимости от того админ или нет показывать тот или иной экран
-            GameTopBar(gameRoom: $gameRoom, leaveRoom: $leaveRoom)
+            GameTopBar(gameRoom: $gameRoom, leaveRoom: $leaveRoom, user: $user)
             Spacer()
-            // Доступно только админу
-            ButtonView(buttonText: $buttonText, buttonColor:  $buttonColor, isDisabled: false) {
-                changeGameStatus(buttonText: buttonText)
-                // TODO: записать в бд статус комнаты
+            
+            // Кнопка старата/паузы игры доступна только админу
+            if user.nickName == gameRoom.adminNickname {
+                ButtonView(buttonText: $buttonText, buttonColor:  $buttonColor, isDisabled: false) {
+                    changeGameStatus(buttonText: buttonText)
+                }
             }
             Spacer()
         }
@@ -68,6 +71,8 @@ struct GameTopBar: View {
     @Binding var gameRoom: GameRoom
     @Binding var leaveRoom: Bool
     
+    @Binding var user: User
+
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading) {
@@ -82,7 +87,11 @@ struct GameTopBar: View {
                         HStack {
                             Text("Room admin:")
                                 .bold()
-                            Text("\(gameRoom.adminNickname)")
+                            if (gameRoom.adminNickname == user.nickName) {
+                                Text("you")
+                            } else {
+                                Text("\(gameRoom.adminNickname)")
+                            }
                         }
                     }
                     .padding()
@@ -97,6 +106,15 @@ struct GameTopBar: View {
                     Spacer()
                     Button {
                         // TODO: leave room
+                        Task {
+                            do {
+                                var t = try await NetworkService.shared.leaveGameRoom(userId: user.id, roomId: gameRoom.id)
+                                print(t)
+                            }
+                            catch {
+                                print("error")
+                            }
+                        }
                     } label: {
                         Image(systemName: "arrowshape.turn.up.right")
                             .foregroundStyle(.black)
@@ -113,6 +131,6 @@ struct GameTopBar: View {
     }
 }
 
-#Preview {
-    GameRoomView(gameRoom: (GameRoom(id: "gameID", adminNickname: "adminNickName", roomCode: "roomCode", gameStatus: "Not started", currentNumberOfChips: 0)))
-}
+//#Preview {
+//    GameRoomView(gameRoom: (GameRoom(id: "gameID", adminNickname: "adminNickName", roomCode: "roomCode", gameStatus: "Not started", currentNumberOfChips: 0)))
+//}
