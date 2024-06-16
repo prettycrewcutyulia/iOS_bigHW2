@@ -13,7 +13,7 @@ struct GameRoomView: View {
 
     var body: some View {
         NavigationStack {
-            // TODO: В зависимости от того админ или нет показывать тот или иной экран
+            // В зависимости от того админ или нет показывается тот или иной экран
             GameTopBar(gameRoom: $viewModel.gameRoom, leaveRoom: $viewModel.leaveRoom, user: $viewModel.user, movePlayerId: $viewModel.movePlayerId)
             Spacer()
             

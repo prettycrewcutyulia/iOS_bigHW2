@@ -16,10 +16,10 @@ class NetworkService {
     
     // TODO: Внимание! Это пока заглушки! Когда будет готов модуль с авторизацией,
     // TODO: сюда нужно будет передавать api key и header для авторизации
-    private let apiKey = "720f8e3a-3649-463f-9bde-d65fc6268da3"
+    private let apiKey = "4fdce876-b9fc-4f61-b702-decc73267adb"
     
-    private let authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI3ODFDMzU2OS1BOEU3LTQ0M0YtQTgzOC0yOTE0MTE3RjlCNzMiLCJleHAiOjE3MTg1NzYzOTkuMjEwOTY2fQ.LXekmFMeioZOWf6DGPg6Lrt-JYwa5EiRglNmwkv0MMs"
-    
+    private let authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJBQjZCRDdGNS1CMzA5LTQwNDgtQTY3OC05MEU2RDZGRDAyQTEiLCJleHAiOjE3MTg2NDMxNDAuODM0NzA3fQ.JswrBAUEWjXS_oHd7a4eSnJUwL0iOcnDX6zlhj0gTPg"
+//    private let authorization = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MTg2NDM0ODMuMjEwNTY3LCJ1c2VySUQiOiIyMERGMjRFRC04M0QyLTQ2OUItODJCMC05REVFMzVCQzMxNTYifQ.0b-OwJqfE26zLCFQCpCoDe1CIYIMXxdAFFT_6BO7TNI"
     private var timerGameRoomView: Timer?
     
     // MARK: Создание игровой комнаты.
@@ -149,10 +149,12 @@ class NetworkService {
     }
     
     // MARK: Получение всех игроков по комнате.
-    func getAllGamersIntoRoom(roomId: UUID) async throws -> [UUID]? {
+    func getAllGamersIntoRoom(roomId: UUID) async throws -> [User]? {
         guard let url = URL(string: "\(localhost)\(APIMethod.allGamers.rawValue)/\(roomId)/gamersIds") else {
             throw NetworkError.badURL
         }
+        
+        var users = [User]()
         print(url)
         var request = URLRequest(url: url)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -166,8 +168,14 @@ class NetworkService {
             
             let decoder = JSONDecoder()
             
-            let gamers = try decoder.decode([UUID].self, from: gamersData)
-            return gamers
+            let gamersIds = try decoder.decode([UUID].self, from: gamersData)
+            
+            for id in gamersIds {
+                if let user = try await getUserById(userId: id) {
+                    users.append(user)
+                }
+            }
+            return users
         }
         catch {
             return nil
@@ -196,6 +204,7 @@ class NetworkService {
         try await URLSession.shared.data(for: request)
     }
     
+    // MARK: Удаление комнаты по id.
     func deleteRoomById(roomId: UUID, completion: @escaping (Result<Void, Error>) -> Void) async throws {
         guard let url = URL(string: "\(localhost)\(APIMethod.deleteRooms.rawValue)/\(roomId)") else {
             throw NetworkError.badURL
@@ -303,6 +312,31 @@ class NetworkService {
         }
     }
     
+    // MARK: Получение пользователя по id.
+    private func getUserById(userId: UUID) async throws -> User? {
+        guard let url = URL(string: "\(localhost)\(APIMethod.getUserById.rawValue)/\(userId)") else {
+            throw NetworkError.badURL
+        }
+        var request = URLRequest(url: url)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "GET"
+        
+        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
+        request.addValue(authorization, forHTTPHeaderField: "Authorization")
+        do {
+            let gamersResponce = try await URLSession.shared.data(for: request)
+            let gamersData = gamersResponce.0
+            
+            let decoder = JSONDecoder()
+            
+            let gamers = try decoder.decode(User.self, from: gamersData)
+            return gamers
+        }
+        catch {
+            return nil
+        }
+    }
+    
     // TODO: Вписывайте сюда свои методы
         
 }
@@ -325,6 +359,7 @@ enum APIMethod: String {
     case leaveRoom = "/gamersIntoRoom/deleteGamer"
     case allGamers = "/gamersIntoRoom/roomId"
     case deleteRooms = "/gamersIntoRoom/deleteRoomWithId"
+    case getUserById = "/auth/getUserById"
 }
 
 enum NetworkError: Error {
