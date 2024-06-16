@@ -32,7 +32,7 @@ struct AuthView: View {
                         }) {
                             Text("Register")
                                 .padding()
-                                .background(Color.blue)
+                                .background(.gray)
                                 .foregroundColor(.white)
                                 .cornerRadius(8)
                         }
@@ -42,7 +42,7 @@ struct AuthView: View {
                         }) {
                             Text("Login")
                                 .padding()
-                                .background(Color.green)
+                                .background(.black)
                                 .foregroundColor(.white)
                                 .cornerRadius(8)
                         }
