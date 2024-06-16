@@ -16,9 +16,9 @@ class NetworkService {
     
     // TODO: Внимание! Это пока заглушки! Когда будет готов модуль с авторизацией,
     // TODO: сюда нужно будет передавать api key и header для авторизации
-    private let apiKey = "bc54b2ea-932a-48e0-abf9-27d023d3ee76"
+    private let apiKey = "720f8e3a-3649-463f-9bde-d65fc6268da3"
     
-    private let authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTg1NjAxOTIuMzAxNTI5LCJ1c2VySUQiOiI3ODFDMzU2OS1BOEU3LTQ0M0YtQTgzOC0yOTE0MTE3RjlCNzMifQ.vBgQ9OWlfnPYeFdX1MDt6Ac6ACw-DhCZkQibcNx-OFE"
+    private let authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI3ODFDMzU2OS1BOEU3LTQ0M0YtQTgzOC0yOTE0MTE3RjlCNzMiLCJleHAiOjE3MTg1NzI2NDQuOTEzMjJ9.5PCSG5JjOjgos09ie7NuAJEFmgm7ui9EgzxNwjPSeJQ"
     
     // MARK: Создание игровой комнаты.
     func createGameRoom(adminNickname: String, roomCode: String?) async throws -> GameRoom {
@@ -151,7 +151,7 @@ class NetworkService {
         guard let url = URL(string: "\(localhost)\(APIMethod.allGamers.rawValue)/\(roomId)/gamersIds") else {
             throw NetworkError.badURL
         }
-        
+        print(url)
         var request = URLRequest(url: url)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "GET"
@@ -194,6 +194,40 @@ class NetworkService {
         try await URLSession.shared.data(for: request)
     }
     
+    func deleteRoomById(roomId: UUID, completion: @escaping (Result<Void, Error>) -> Void) async throws {
+        guard let url = URL(string: "\(localhost)\(APIMethod.deleteRooms.rawValue)/\(roomId)") else {
+            throw NetworkError.badURL
+        }
+        print(url)
+        
+        var request = URLRequest(url: url)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "DELETE"
+        
+        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
+        request.addValue(authorization, forHTTPHeaderField: "Authorization")
+        
+        let session = URLSession.shared
+        
+        // Создаем задачу для выполнения запроса
+        let task = session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                // Обработка ошибки, если запрос не удался
+                print("Ошибка: \(error)")
+                return
+            }
+            self.getServerResponse(response: response, data: data) { result in
+                switch result {
+                case .success(_): break
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+        // Запускаем задачу
+        task.resume()
+        completion(.success(()))
+    }
     
     // MARK: - Private functions
     
@@ -242,6 +276,7 @@ enum APIMethod: String {
     case gameRooms = "/gameRooms"
     case leaveRoom = "/gamersIntoRoom/deleteGamer"
     case allGamers = "/gamersIntoRoom/roomId"
+    case deleteRooms = "/gamersIntoRoom/deleteRoomWithId"
 }
 
 enum NetworkError: Error {

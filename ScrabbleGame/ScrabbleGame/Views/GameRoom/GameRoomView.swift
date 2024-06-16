@@ -108,13 +108,6 @@ struct GameTopBar: View {
                     }
                     .padding()
                     Spacer()
-//                    HStack {
-//                        Text("\(gameRoom.currentNumberOfChips)")
-//                            .foregroundStyle(gameRoom.currentNumberOfChips == 0 ? .red : .green)
-//                        Image(systemName: "dollarsign.circle")
-//                            .foregroundStyle(.yellow)
-//                        
-//                    }
                     LetterInTileCounterView(count: $gameRoom.currentNumberOfChips)
                     Spacer()
                     Button {
@@ -140,13 +133,38 @@ struct GameTopBar: View {
                         Image(systemName: "arrowshape.turn.up.right")
                             .foregroundStyle(.black)
                     }
+                    if (gameRoom.adminNickname == user.nickName) {
+                        Button {
+                            // delete room
+                            Task {
+                                do {
+                                    try await NetworkService.shared.deleteRoomById(roomId: gameRoom.id) { res in
+                                        switch res {
+                                        case .success(_):
+                                            leaveRoom.toggle()
+                                        case .failure(let failure):
+                                            print(failure.localizedDescription)
+                                            showErrorAlert.toggle()
+                                            errorMessage = failure.localizedDescription
+                                        }
+                                    }
+                                }
+                                catch {
+                                    print("error")
+                                }
+                            }
+                        } label: {
+                            Image(systemName: "multiply")
+                                .foregroundStyle(.red)
+                        }
+                    }
                     
                     if user.nickName == gameRoom.adminNickname {
                         Button {
                             showAdminSettingsView.toggle()
                             
                         } label: {
-                            Image(systemName: "pencil")
+                            Image(systemName: "person")
                                 .foregroundStyle(.black)
                         }
                     }

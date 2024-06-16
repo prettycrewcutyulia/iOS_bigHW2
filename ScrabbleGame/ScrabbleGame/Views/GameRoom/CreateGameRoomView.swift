@@ -74,6 +74,7 @@ struct CreateGameRoomView: View {
                     Task {
                         do {
                             gameRoom = try await NetworkService.shared.createGameRoom(adminNickname: user.nickName, roomCode: roomCode)
+                            try await NetworkService.shared.addGamerIntoRoom(gamerId: user.id, roomId: gameRoom!.id)
                             showGameRoom.toggle()
                         } catch {
                             showErrorAlert.toggle()
