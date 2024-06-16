@@ -16,9 +16,9 @@ class NetworkService {
     
     // TODO: Внимание! Это пока заглушки! Когда будет готов модуль с авторизацией,
     // TODO: сюда нужно будет передавать api key и header для авторизации
-    private let apiKey = "f4bab26c-e061-413b-8d19-37f182b49725"
+    private let apiKey = "bc54b2ea-932a-48e0-abf9-27d023d3ee76"
     
-    private let authorization = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySUQiOiI3ODFDMzU2OS1BOEU3LTQ0M0YtQTgzOC0yOTE0MTE3RjlCNzMiLCJleHAiOjE3MTg0ODk3NzQuODA2NTMyOX0.lruRHXrGdEGBzRdFkGVFkwSJ_TH2sZeSi5MSGWLztKs"
+    private let authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI3ODFDMzU2OS1BOEU3LTQ0M0YtQTgzOC0yOTE0MTE3RjlCNzMiLCJleHAiOjE3MTg1NDEwNDQuNTU4NzI0fQ.kp68gvAxR1pEiznWxJzt4zRYQD2blpsDG4MtbR7KrBM"
     
     // MARK: Создание игровой комнаты.
     func createGameRoom(adminNickname: String, roomCode: String?) async throws -> GameRoom {
@@ -85,10 +85,11 @@ class NetworkService {
     }
     
     // MARK: Выход из комнаты
-    func leaveGameRoom(userId: UUID, roomId: UUID) async throws -> Bool {
+    func leaveGameRoom(userId: UUID, roomId: UUID, completion: @escaping (Result<Void, Error>) -> Void) async throws  {
         guard let url = URL(string: "\(localhost)\(APIMethod.leaveRoom.rawValue)/\(userId)/withRoom/\(roomId)") else {
             throw NetworkError.badURL
         }
+        print(url)
         
         var request = URLRequest(url: url)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -97,23 +98,30 @@ class NetworkService {
         request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
         request.addValue(authorization, forHTTPHeaderField: "Authorization")
         
-        do {
-            let deleteGamerResponce = try await URLSession.shared.data(for: request)
-            
-            let deleteGamerData = deleteGamerResponce.1 as! HTTPURLResponse
-            
-            if deleteGamerData.statusCode == 200 {
-                return true // Успешно покинули комнату
-            } else {
-                return false
+        let session = URLSession.shared
+        
+        // Создаем задачу для выполнения запроса
+        let task = session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                // Обработка ошибки, если запрос не удался
+                print("Ошибка: \(error)")
+                return
             }
-        } catch {
-            return false
+            self.getServerResponse(response: response, data: data) { result in
+                switch result {
+                case .success(_): break
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
         }
+        // Запускаем задачу
+        task.resume()
+        completion(.success(()))
     }
     
     // MARK: Получение всех комнат.
-    func getAllGameRooms() async throws -> [GameRoom] {
+    func getAllGameRooms() async throws -> [GameRoom]? {
         guard let url = URL(string: "\(localhost)\(APIMethod.gameRooms.rawValue)") else {
             throw NetworkError.badURL
         }
@@ -154,6 +162,33 @@ class NetworkService {
         request.httpBody = data
         
         try await URLSession.shared.data(for: request)
+    }
+    
+    
+    // MARK: - Private functions
+    
+    // MARK: Обработка ответов сервера
+    private func getServerResponse(response: URLResponse?, data: Data?, completion: @escaping (Result<Data, Error>) -> Void) {
+        if let httpResponse = response as? HTTPURLResponse {
+            // Получаем статус код ответа
+            let statusCode = httpResponse.statusCode
+
+            if statusCode >= 200 && statusCode <= 300 {
+                if let data = data {
+                    completion(.success((data)))
+                }
+            } else {
+                do {
+                    if let errMessage = try JSONSerialization.jsonObject(with: data ?? Data()) as? [String: Any] {
+                        if let reason = errMessage["reason"] as? String {
+                            completion(.failure(NSError(domain: "ServerError", code: statusCode, userInfo: [NSLocalizedDescriptionKey: reason])))
+                        }
+                    }
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+        }
     }
     
     // TODO: Вписывайте сюда свои методы

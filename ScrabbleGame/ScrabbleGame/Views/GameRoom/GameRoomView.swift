@@ -13,7 +13,7 @@ struct GameRoomView: View {
     
     @State var leaveRoom: Bool = false
     
-    @State var buttonText: String = GameButtonText.StartGame.rawValue
+    @State var buttonText: String = ""
     @State var buttonColor: Color = .green
     @State var showErrorAlert: Bool = false
 
@@ -25,15 +25,26 @@ struct GameRoomView: View {
             
             // Кнопка старата/паузы игры доступна только админу
             if user.nickName == gameRoom.adminNickname {
-                ButtonView(buttonText: $buttonText, buttonColor:  $buttonColor, isDisabled: false) {
+                ButtonView(buttonText: $buttonText, buttonColor: $buttonColor, isDisabled: false) {
                     changeGameStatus(buttonText: buttonText)
                 }
             }
             Spacer()
         }
+        .onAppear {
+            getButtonValue()
+        }
         .alert(isPresented: $showErrorAlert, content: {
             return Alert(title: Text("Произошла ошибка при смене статуса игры"), dismissButton: .default(Text("Ok")))
         })
+    }
+    
+    func getButtonValue() {
+        if gameRoom.gameStatus.lowercased() == GameStatus.Running.rawValue.lowercased() {
+            buttonText = GameButtonText.PauseGame.rawValue
+        } else {
+            buttonText = GameButtonText.StartGame.rawValue
+        }
     }
     
     // MARK: Смена статуса игры.
@@ -49,7 +60,6 @@ struct GameRoomView: View {
                     showErrorAlert.toggle()
                 }
             }
-            
         } else {
             self.buttonText = GameButtonText.StartGame.rawValue
             self.buttonColor = .green
@@ -63,8 +73,6 @@ struct GameRoomView: View {
             }
         }
     }
-    
-    
 }
 
 struct GameTopBar: View {
@@ -72,6 +80,8 @@ struct GameTopBar: View {
     @Binding var leaveRoom: Bool
     
     @Binding var user: User
+    @State var showErrorAlert: Bool = false
+    @State var errorMessage: String = ""
 
     var body: some View {
         NavigationStack {
@@ -108,8 +118,16 @@ struct GameTopBar: View {
                         // TODO: leave room
                         Task {
                             do {
-                                var t = try await NetworkService.shared.leaveGameRoom(userId: user.id, roomId: gameRoom.id)
-                                print(t)
+                                try await NetworkService.shared.leaveGameRoom(userId: user.id, roomId: gameRoom.id) { res in
+                                    switch res {
+                                    case .success(_):
+                                        leaveRoom.toggle()
+                                    case .failure(let failure):
+                                        print(failure.localizedDescription)
+                                        showErrorAlert.toggle()
+                                        errorMessage = failure.localizedDescription
+                                    }
+                                }
                             }
                             catch {
                                 print("error")
@@ -126,8 +144,11 @@ struct GameTopBar: View {
         }
         .fullScreenCover(isPresented: $leaveRoom) {
             // TODO: Переход на другой экран всех комнат
-            Text("You lived room")
+            AllGameRoomsView(user: $user)
         }
+        .alert(isPresented: $showErrorAlert, content: {
+            return Alert(title: Text(errorMessage), dismissButton: .default(Text("Ok")))
+        })
     }
 }
 

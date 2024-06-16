@@ -11,7 +11,7 @@ struct AllGameRoomsView: View {
     @Binding var user: User
     @State var selectedGameRoom: GameRoom? = nil
 
-    @State var gameRooms = [GameRoom]()
+    @State var gameRooms: [GameRoom]? = nil
     
     @State var showErrorAlert: Bool = false
     @State var showPasswordAlert: Bool = false
@@ -29,44 +29,49 @@ struct AllGameRoomsView: View {
                 Button("Create new room", systemImage: "plus") {
                     showCreateGameRoomView.toggle()
                 }
-                List {
-                    ForEach(gameRooms) { gameRoom in
-                        HStack {
-                            if (user.nickName == gameRoom.adminNickname) {
-                                HStack {
-                                    Text("This is your room, ")
-                                        .bold()
-                                        .foregroundStyle(.green)
-                                    Text("\(gameRoom.gameStatus)")
-                                }
-                            } else {
-                                Text("Room by \(gameRoom.adminNickname), \(gameRoom.gameStatus)")
-                            }
-                            Spacer()
-                            if let code = gameRoom.roomCode {
-                                if (!code.isEmpty) {
-                                    Image(systemName: "lock.fill")
-                                        .foregroundStyle(user.nickName == gameRoom.adminNickname ? .green : .black)
-                                }
-                            }
-                        }
-                        .onTapGesture {
-                            if let code = gameRoom.roomCode {
-                                if code.isEmpty || (user.nickName == gameRoom.adminNickname) {
-                                    // Просто переход в комнату
-                                    addUserIntoRoom()
-                                    showGameRoom.toggle()
-                                    selectedGameRoom = gameRoom
+                if let rooms = gameRooms {
+                    List {
+                        ForEach(rooms) { gameRoom in
+                            HStack {
+                                if (user.nickName == gameRoom.adminNickname) {
+                                    HStack {
+                                        Text("This is your room, ")
+                                            .bold()
+                                            .foregroundStyle(.green)
+                                        Text("\(gameRoom.gameStatus)")
+                                    }
                                 } else {
-                                    // Справшиваем пароль
-                                    showPasswordAlert.toggle()
-                                    correctRoomCode = code
-                                    selectedGameRoom = gameRoom
+                                    Text("Room by \(gameRoom.adminNickname), \(gameRoom.gameStatus)")
+                                }
+                                Spacer()
+                                if let code = gameRoom.roomCode {
+                                    if (!code.isEmpty) {
+                                        Image(systemName: "lock.fill")
+                                            .foregroundStyle(user.nickName == gameRoom.adminNickname ? .green : .black)
+                                    }
                                 }
                             }
-                            
+                            .onTapGesture {
+                                if let code = gameRoom.roomCode {
+                                    if code.isEmpty || (user.nickName == gameRoom.adminNickname) {
+                                        // Просто переход в комнату
+                                        addUserIntoRoom()
+                                        showGameRoom.toggle()
+                                        selectedGameRoom = gameRoom
+                                    } else {
+                                        // Справшиваем пароль
+                                        showPasswordAlert.toggle()
+                                        correctRoomCode = code
+                                        selectedGameRoom = gameRoom
+                                    }
+                                }
+                                
+                            }
                         }
                     }
+                }
+                else {
+                    Text("There are no rooms")
                 }
             }
         }
@@ -120,7 +125,11 @@ struct AllGameRoomsView: View {
     func addUserIntoRoom() {
         Task {
             do {
-                try await NetworkService.shared.addGamerIntoRoom(gamerId: user.id, roomId: selectedGameRoom!.id)
+                if let gameRoomId = selectedGameRoom?.id {
+                    try await NetworkService.shared.addGamerIntoRoom(gamerId: user.id, roomId: gameRoomId)
+                } else {
+                    showErrorAlert.toggle()
+                }
             } catch {
                 showErrorAlert.toggle()
             }
