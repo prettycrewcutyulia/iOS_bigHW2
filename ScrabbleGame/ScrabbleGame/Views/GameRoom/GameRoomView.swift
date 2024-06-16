@@ -25,7 +25,7 @@ struct GameRoomView: View {
             
             // Кнопка старата/паузы игры доступна только админу
             if user.nickName == gameRoom.adminNickname {
-                ButtonView(buttonText: $buttonText, buttonColor:  $buttonColor, isDisabled: false) {
+                CustomButton(buttonText: $buttonText, buttonColor:  $buttonColor, isDisabled: false) {
                     changeGameStatus(buttonText: buttonText)
                 }
             }

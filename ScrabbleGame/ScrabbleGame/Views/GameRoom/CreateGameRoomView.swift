@@ -69,7 +69,7 @@ struct CreateGameRoomView: View {
                 
                 Spacer()
                 
-                ButtonView(buttonText: Binding<String>.constant("Next"), buttonColor: Binding<Color>.constant(.black), isDisabled: isRoomPublic ? false : roomCode.isEmpty) {
+                CustomButton(buttonText: Binding<String>.constant("Next"), buttonColor: Binding<Color>.constant(.black), isDisabled: isRoomPublic ? false : roomCode.isEmpty) {
                     // запрос
                     Task {
                         do {

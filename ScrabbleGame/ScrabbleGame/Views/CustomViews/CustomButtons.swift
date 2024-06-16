@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ButtonView: View {
+struct CustomButton: View {
     @Binding var buttonText: String
     @Binding var buttonColor: Color
     
