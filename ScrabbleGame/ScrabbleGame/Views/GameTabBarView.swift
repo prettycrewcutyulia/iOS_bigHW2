@@ -22,7 +22,7 @@ struct GameTopBar: View {
         NavigationStack {
             VStack(alignment: .leading) {
                 HStack {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .center) {
                         HStack {
                             Text("Game status:")
                                 .bold()
@@ -39,9 +39,6 @@ struct GameTopBar: View {
                             }
                         }
                     }
-                    .padding()
-                    Spacer()
-                    LetterInTileCounterView(count: $gameRoom.currentNumberOfChips)
                     Spacer()
                     Button {
                         // leave room
@@ -102,19 +99,19 @@ struct GameTopBar: View {
                         }
                     }
                 }
+                
                 HStack {
                     LetterInTileCounterView(count: $gameRoom.currentNumberOfChips)
-                    
+                    Spacer()
                     Button(action: {
                         showChipsOnHand.toggle()
                     }, label: { HStack {
                         Text("Chips on hand")
                         Image(systemName: "arrowshape.forward")
-                    }.padding() // Добавление отступа вокруг текста
-                            .background(RoundedRectangle(cornerRadius: 25) // Использование RoundedRectangle как фона
-                                .fill(Color.gray)) // Заполнение фона белым цветом
-                            .foregroundColor(.white) // Установка цвета текста в черный
-                        //                        .padding() // Дополнительный отступ для визуального разделения
+                    }.padding()
+                            .background(RoundedRectangle(cornerRadius: 25)
+                                .fill(Color.gray))
+                            .foregroundColor(.white)
                     })
                 }
             }.padding()
