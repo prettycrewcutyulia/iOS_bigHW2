@@ -13,22 +13,39 @@ class UserDefaultsService {
     private init() {}
     
     func getCurrentUser() -> User {
+        getCurrentUserSafe()!
+    }
+    
+    func getCurrentUserSafe() -> User? {
         if (currentUser == nil) {
             let id = UserDefaults.standard.string(forKey: "currentUserId")
             let nickName = UserDefaults.standard.string(forKey: "currentUserNickName")
             let token = UserDefaults.standard.string(forKey: "currentUserToken")
+            if (id == nil || nickName == nil || token == nil) {
+                return nil
+            }
             currentUser = User(id: UUID(uuidString: id!)!, nickName: nickName!, token: token!)
         }
-        return currentUser!
+        return currentUser
+    }
+    
+    func isCurrentUserSaved() -> Bool {
+        let id = UserDefaults.standard.string(forKey: "currentUserId")
+        return id != nil
     }
 
     private var currentUser: User?
 
-    func setCurrentUser(id: String, nickName: String, token: String) {
+    func setCurrentUser(id: String, nickName: String, token: String, password: String) {
         UserDefaults.standard.set(id, forKey: "currentUserId")
         UserDefaults.standard.set(nickName, forKey: "currentUserNickName")
         UserDefaults.standard.set(token, forKey: "currentUserToken")
         currentUser = User(id: UUID(uuidString: id)!, nickName: nickName, token: token)
+        UserDefaults.standard.set(password, forKey: "currentUserPassword")
+    }
+    
+    func getCurrentUserPassword() -> String? {
+        return UserDefaults.standard.string(forKey: "currentUserPassword")
     }
 
     func clearCurrentUser() {

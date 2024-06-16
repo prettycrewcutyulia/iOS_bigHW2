@@ -20,6 +20,27 @@ class AuthViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
+    func onAppear() {
+         loadCurrentUser()
+     }
+     
+    private func loadCurrentUser() {
+        if (!UserDefaultsService.shared.isCurrentUserSaved()) {
+            return
+        }
+        let currentUser = UserDefaultsService.shared.getCurrentUserSafe()
+        if (currentUser == nil) {
+            return
+        }
+        
+        nickName = currentUser!.nickName
+        let savedPass = UserDefaultsService.shared.getCurrentUserPassword()
+        if (savedPass != nil) {
+            password = savedPass!
+            login()
+        }
+    }
+    
     func register() {
         guard !nickName.isEmpty, !password.isEmpty else {
             registerStatus = "Fields cannot be empty."
@@ -61,7 +82,7 @@ class AuthViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let id, let token):
-                        UserDefaultsService.shared.setCurrentUser(id: id, nickName: self.nickName, token: token)
+                        UserDefaultsService.shared.setCurrentUser(id: id, nickName: self.nickName, token: token,              password: self.password)
                         self.loginStatus = "Login successful"
                         self.isLoggedIn = true
                     case .error(let message):

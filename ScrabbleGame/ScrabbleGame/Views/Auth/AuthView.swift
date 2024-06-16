@@ -64,6 +64,9 @@ struct AuthView: View {
                 
                 Spacer()
             }
+            .onAppear {
+                viewModel.onAppear()
+            }
             .navigationTitle("Login or Register")
             .background(
                 NavigationLink(
