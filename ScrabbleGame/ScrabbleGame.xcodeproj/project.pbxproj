@@ -12,6 +12,7 @@
 		486E90AA2C1F03B2009FF728 /* ScoreboardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90A92C1F03B2009FF728 /* ScoreboardModel.swift */; };
 		486E90AC2C1F1302009FF728 /* WinsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90AB2C1F1302009FF728 /* WinsView.swift */; };
 		486E90AF2C1F15FB009FF728 /* WinsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90AE2C1F15FB009FF728 /* WinsViewModel.swift */; };
+		486E90B12C1F5EFA009FF728 /* LetterInTileCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90B02C1F5EFA009FF728 /* LetterInTileCounterView.swift */; };
 		7D8BF6052C1E7C87006734FB /* ChipField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6042C1E7C87006734FB /* ChipField.swift */; };
 		7D8BF6072C1E7D75006734FB /* ChipsOnField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6062C1E7D75006734FB /* ChipsOnField.swift */; };
 		7D8BF60A2C1E7DCC006734FB /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6092C1E7DCC006734FB /* Coordinate.swift */; };
@@ -40,6 +41,7 @@
 		486E90A92C1F03B2009FF728 /* ScoreboardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreboardModel.swift; sourceTree = "<group>"; };
 		486E90AB2C1F1302009FF728 /* WinsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinsView.swift; sourceTree = "<group>"; };
 		486E90AE2C1F15FB009FF728 /* WinsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinsViewModel.swift; sourceTree = "<group>"; };
+		486E90B02C1F5EFA009FF728 /* LetterInTileCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterInTileCounterView.swift; sourceTree = "<group>"; };
 		7D8BF6042C1E7C87006734FB /* ChipField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipField.swift; sourceTree = "<group>"; };
 		7D8BF6062C1E7D75006734FB /* ChipsOnField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipsOnField.swift; sourceTree = "<group>"; };
 		7D8BF6092C1E7DCC006734FB /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				7D8BF6032C1E7C6F006734FB /* Chips */,
 				A9FBADD22C19F598001D802F /* GameRoom */,
 				A9FBADCF2C19F0F4001D802F /* CustomViews */,
+				486E90B02C1F5EFA009FF728 /* LetterInTileCounterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				A912A2F42C1DE864009B1091 /* Enums.swift in Sources */,
 				486E90A82C1F02EC009FF728 /* ScoreboardViewModel.swift in Sources */,
 				A912A2FE2C1F1CFA009B1091 /* AllGameRoomsViewModel.swift in Sources */,
+				486E90B12C1F5EFA009FF728 /* LetterInTileCounterView.swift in Sources */,
 				A912A2F72C1E00DE009B1091 /* User.swift in Sources */,
 				A912A2FB2C1E058B009B1091 /* AllGameRoomsView.swift in Sources */,
 				7D8BF60C2C1E7DE4006734FB /* Chip.swift in Sources */,
