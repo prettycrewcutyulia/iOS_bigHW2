@@ -14,34 +14,8 @@ struct ScoreboardView: View {
         VStack(alignment: .center) {
                     Text("Scoreboard")
                         .font(.title)
-
-                    List {
-                        HStack {
-                            Text("Name")
-                                .font(.headline)
-                                .fontWeight(.bold)
-                            
-                            Spacer()
-                            
-                            Text("Score")
-                                .font(.headline)
-                                .fontWeight(.bold)
-                        }
-                        
-                        // Динамически созданные строки для каждой модели из списка
-                        ForEach(viewModel.scoreboardModels.indices, id: \.self) { index in
-                            HStack {
-                                Text(viewModel.scoreboardModels[index].player ?? "No name")
-                                    .font(.caption)
-                                    .fontWeight(.medium)
-                                
-                                Spacer() // Также добавим Spacer здесь
-                                
-                                Text("\(viewModel.scoreboardModels[index].score)")
-                                    .font(.caption)
-                            }
-                        }
-                    }
+            
+            ScoreboardViewList(scoreboardModels: viewModel.scoreboardModels)
             CustomButton(buttonText:  Binding<String>.constant("Done"), buttonColor: Binding<Color>.constant(.black), isDisabled: false) {
                 viewModel.onButtonDoneTap()
             }
@@ -51,5 +25,39 @@ struct ScoreboardView: View {
                 .onAppear {
                     viewModel.onAppear()
                 }
+    }
+}
+
+struct ScoreboardViewList: View {
+    var scoreboardModels: [ScoreboardModel]
+
+    var body: some View {
+        List {
+            HStack {
+                Text("Name")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                
+                Spacer()
+                
+                Text("Score")
+                    .font(.headline)
+                    .fontWeight(.bold)
+            }
+            
+            // Динамически созданные строки для каждой модели из списка
+            ForEach(scoreboardModels.indices, id: \.self) { index in
+                HStack {
+                    Text(scoreboardModels[index].player ?? "No name")
+                        .font(.caption)
+                        .fontWeight(.medium)
+                    
+                    Spacer() // Также добавим Spacer здесь
+                    
+                    Text("\(scoreboardModels[index].score)")
+                        .font(.caption)
+                }
+            }
+        }
     }
 }
