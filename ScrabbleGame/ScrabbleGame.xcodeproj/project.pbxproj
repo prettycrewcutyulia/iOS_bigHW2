@@ -10,6 +10,8 @@
 		486E90A52C1F02D5009FF728 /* ScoreboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90A42C1F02D5009FF728 /* ScoreboardView.swift */; };
 		486E90A82C1F02EC009FF728 /* ScoreboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90A72C1F02EC009FF728 /* ScoreboardViewModel.swift */; };
 		486E90AA2C1F03B2009FF728 /* ScoreboardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90A92C1F03B2009FF728 /* ScoreboardModel.swift */; };
+		486E90AC2C1F1302009FF728 /* WinsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90AB2C1F1302009FF728 /* WinsView.swift */; };
+		486E90AF2C1F15FB009FF728 /* WinsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90AE2C1F15FB009FF728 /* WinsViewModel.swift */; };
 		7D8BF6052C1E7C87006734FB /* ChipField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6042C1E7C87006734FB /* ChipField.swift */; };
 		7D8BF6072C1E7D75006734FB /* ChipsOnField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6062C1E7D75006734FB /* ChipsOnField.swift */; };
 		7D8BF60A2C1E7DCC006734FB /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6092C1E7DCC006734FB /* Coordinate.swift */; };
@@ -36,6 +38,8 @@
 		486E90A42C1F02D5009FF728 /* ScoreboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreboardView.swift; sourceTree = "<group>"; };
 		486E90A72C1F02EC009FF728 /* ScoreboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreboardViewModel.swift; sourceTree = "<group>"; };
 		486E90A92C1F03B2009FF728 /* ScoreboardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreboardModel.swift; sourceTree = "<group>"; };
+		486E90AB2C1F1302009FF728 /* WinsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinsView.swift; sourceTree = "<group>"; };
+		486E90AE2C1F15FB009FF728 /* WinsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinsViewModel.swift; sourceTree = "<group>"; };
 		7D8BF6042C1E7C87006734FB /* ChipField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipField.swift; sourceTree = "<group>"; };
 		7D8BF6062C1E7D75006734FB /* ChipsOnField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipsOnField.swift; sourceTree = "<group>"; };
 		7D8BF6092C1E7DCC006734FB /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
@@ -76,9 +80,17 @@
 			children = (
 				486E90A42C1F02D5009FF728 /* ScoreboardView.swift */,
 				486E90A72C1F02EC009FF728 /* ScoreboardViewModel.swift */,
-				486E90A92C1F03B2009FF728 /* ScoreboardModel.swift */,
 			);
 			path = Scoreboard;
+			sourceTree = "<group>";
+		};
+		486E90AD2C1F15EC009FF728 /* Wins */ = {
+			isa = PBXGroup;
+			children = (
+				486E90AB2C1F1302009FF728 /* WinsView.swift */,
+				486E90AE2C1F15FB009FF728 /* WinsViewModel.swift */,
+			);
+			path = Wins;
 			sourceTree = "<group>";
 		};
 		7D8BF6032C1E7C6F006734FB /* Chips */ = {
@@ -152,6 +164,7 @@
 		A9FBADC82C19E74D001D802F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				486E90A92C1F03B2009FF728 /* ScoreboardModel.swift */,
 				7D8BF6082C1E7DBA006734FB /* Chips */,
 				A9FBADC62C19E2D6001D802F /* GameRoom.swift */,
 				A912A2F62C1E00DE009B1091 /* User.swift */,
@@ -171,6 +184,7 @@
 		A9FBADCA2C19E79C001D802F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				486E90AD2C1F15EC009FF728 /* Wins */,
 				486E90A62C1F02D9009FF728 /* Scoreboard */,
 				7D8BF6032C1E7C6F006734FB /* Chips */,
 				A9FBADD22C19F598001D802F /* GameRoom */,
@@ -273,6 +287,7 @@
 				7D8BF6072C1E7D75006734FB /* ChipsOnField.swift in Sources */,
 				7D8BF6052C1E7C87006734FB /* ChipField.swift in Sources */,
 				486E90A52C1F02D5009FF728 /* ScoreboardView.swift in Sources */,
+				486E90AF2C1F15FB009FF728 /* WinsViewModel.swift in Sources */,
 				A9FBADD12C19F129001D802F /* CustomButtons.swift in Sources */,
 				A912A3002C1F1FE6009B1091 /* AuthService.swift in Sources */,
 				A9FBADC52C19DEAF001D802F /* NetworkService.swift in Sources */,
@@ -287,6 +302,7 @@
 				A912A2FB2C1E058B009B1091 /* AllGameRoomsView.swift in Sources */,
 				7D8BF60C2C1E7DE4006734FB /* Chip.swift in Sources */,
 				A9FBADD42C19F5B3001D802F /* GameRoomView.swift in Sources */,
+				486E90AC2C1F1302009FF728 /* WinsView.swift in Sources */,
 				486E90AA2C1F03B2009FF728 /* ScoreboardModel.swift in Sources */,
 				7D8BF60E2C1E9248006734FB /* ChipConstants.swift in Sources */,
 			);
