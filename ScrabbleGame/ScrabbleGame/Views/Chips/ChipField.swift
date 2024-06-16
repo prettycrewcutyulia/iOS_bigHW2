@@ -22,7 +22,9 @@ struct ChipField: View {
             let gridSize = size * 10
             
             ScrollView([.horizontal, .vertical]) {
+                Spacer()
                 VStack(alignment:.center, spacing: 0) {
+                    Spacer()
                     HStack(spacing: 0) {
                         Spacer().frame(width: size, height: size)
                         ForEach(0..<15, id: \.self) { col in
@@ -38,47 +40,43 @@ struct ChipField: View {
                                 .border(Color.black, width: 0.3)
                             ForEach(0..<15, id: \.self) { col in
                                 let coordinate = Coordinate(x: String(letters[col]), y: row + 1) // Обновляем координаты y
-                        
+                                
                                 let chip = chips.first { $0.coordinate == coordinate }
                                 Cell(chip: chip, size: size, coordinate: coordinate,
                                      isSelected: selectedCoordinates.contains(coordinate))
-                                    .onTapGesture {
-                                        print("Выбрали")
-                                        selectChip(at: coordinate)
-                                    }
+                                .onTapGesture {
+                                    print("Выбрали")
+                                    selectChip(at: coordinate)
+                                }
                             }
                         }
                     }
                 }
-                .offset(x: -(gridSize/2), y: -(gridSize/2))
                 .scaleEffect(zoom)
             }
             .frame(maxWidth: .infinity, maxHeight: gridSize)
             .scaleEffect(zoom)
             .gesture(MagnificationGesture() // Добавление жеста масштабирования
-                           .onChanged { value in
-                               zoom = value.magnitude // Изменение масштаба в зависимости от жеста
-                           }
-                           .onEnded { value in
-                               let delta = value.magnitude / zoom
-                               zoom *= delta // Финальное применение масштаба
-                               if zoom < 0.6 {
-                                   zoom = 0.6 // Устанавливаем минимальный масштаб, чтобы избежать слишком маленького размера
-                               }
-                           })
+                .onChanged { value in
+                    zoom = value.magnitude // Изменение масштаба в зависимости от жеста
+                }
+                .onEnded { value in
+                    let delta = value.magnitude / zoom
+                    zoom *= delta // Финальное применение масштаба
+                    if zoom < 0.6 {
+                        zoom = 0.6 // Устанавливаем минимальный масштаб, чтобы избежать слишком маленького размера
+                    }
+                })
             .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
+            .defaultScrollAnchor(.center)
         }
     }
     
     private func selectChip(at coordinate: Coordinate) {
-        if let index = chips.firstIndex(where: { $0.coordinate == coordinate }) {
-            if(selectedCoordinates.contains(coordinate)) {
-                selectedCoordinates.remove(coordinate)
-            } else {
-                selectedCoordinates.insert(coordinate)
-            }
+        if(selectedCoordinates.contains(coordinate)) {
+            selectedCoordinates.remove(coordinate)
         } else {
-            print("NotFound")
+            selectedCoordinates.insert(coordinate)
         }
     }
 }

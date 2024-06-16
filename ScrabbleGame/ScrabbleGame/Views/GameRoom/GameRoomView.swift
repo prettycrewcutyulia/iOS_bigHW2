@@ -8,15 +8,13 @@
 import SwiftUI
 
 struct GameRoomView: View {
-    @Binding var chipsOnHand: [Chip]
-    
     @ObservedObject var viewModel: GameRoomViewModel
 
 
     var body: some View {
         NavigationStack {
             // TODO: В зависимости от того админ или нет показывать тот или иной экран
-            GameTopBar(gameRoom: $viewModel.gameRoom, leaveRoom: $viewModel.leaveRoom, chipsOnHand: $chipsOnHand, user: $viewModel.user)
+            GameTopBar(gameRoom: $viewModel.gameRoom, leaveRoom: $viewModel.leaveRoom, chipsOnHand: $viewModel.chipsOnHand, user: $viewModel.user)
             Spacer()
             
             if viewModel.gameRoom.gameStatus.lowercased() == GameStatus.Running.rawValue.lowercased() {

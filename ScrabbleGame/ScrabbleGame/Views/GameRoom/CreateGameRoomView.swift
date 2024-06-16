@@ -90,7 +90,8 @@ struct CreateGameRoomView: View {
         })
         .fullScreenCover(isPresented: $showGameRoom) {
             if let unwrappedGameRoom = gameRoom {
-                GameRoomView(gameRoom: unwrappedGameRoom, user: $user, chipsOnHand: $chipsOnHand)
+                let viewModel: GameRoomViewModel = GameRoomViewModel(gameRoom: unwrappedGameRoom)
+                GameRoomView(viewModel: viewModel)
             }
         }
     }

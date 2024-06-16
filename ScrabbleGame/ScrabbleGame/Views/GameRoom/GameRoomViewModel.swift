@@ -16,6 +16,7 @@ class GameRoomViewModel: ObservableObject {
     @Published var leaveRoom: Bool = false
     @Published var user = AuthService.shared.currentUser
     
+    @Published var chipsOnHand: [Chip] = []
     @Published var gameRoom: GameRoom
     
     init(gameRoom: GameRoom) {

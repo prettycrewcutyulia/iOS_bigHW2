@@ -75,7 +75,8 @@ struct AllGameRoomsView: View {
         
         .fullScreenCover(isPresented: $showGameRoom) {
             if let room = currentGameRoom {
-                GameRoomView(gameRoom: room , user: $user, chipsOnHand: $chipsOnHand)
+                let viewModel = GameRoomViewModel(gameRoom: room)
+                GameRoomView(viewModel: viewModel)
             }
         }
         
