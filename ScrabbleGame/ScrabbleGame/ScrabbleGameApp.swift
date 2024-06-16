@@ -13,9 +13,9 @@ struct ScrabbleGameApp: App {
         WindowGroup {
             // При вызове данного view - передавать никнэйм админа. Сейчас это заглушка.
 //            CreateGameRoomView(adminNickname: Binding<String>.constant("irina"), user: Binding<User>.constant(User(id: "0")))
-//            AllGameRoomsView(user: Binding<User>.constant(User(id: UUID(uuidString: "38B6A72A-4580-4736-B3EE-C33D3B060F7B")!, nickName: "nbb")))
+            AllGameRoomsView(user: Binding<User>.constant(User(id: UUID(uuidString: "38B6A72A-4580-4736-B3EE-C33D3B060F7B")!, nickName: "nbb")))
             
-            ScoreboardView()
+//            ScoreboardView()
         }
     }
 }

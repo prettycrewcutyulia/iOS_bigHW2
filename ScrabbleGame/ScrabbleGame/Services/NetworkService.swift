@@ -18,7 +18,7 @@ class NetworkService {
     // TODO: сюда нужно будет передавать api key и header для авторизации
     private let apiKey = "bc54b2ea-932a-48e0-abf9-27d023d3ee76"
     
-    private let authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI3ODFDMzU2OS1BOEU3LTQ0M0YtQTgzOC0yOTE0MTE3RjlCNzMiLCJleHAiOjE3MTg1NDEwNDQuNTU4NzI0fQ.kp68gvAxR1pEiznWxJzt4zRYQD2blpsDG4MtbR7KrBM"
+    private let authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI3ODFDMzU2OS1BOEU3LTQ0M0YtQTgzOC0yOTE0MTE3RjlCNzMiLCJleHAiOjE3MTg1NTE1NjguNTE3MDc5OH0.zOGVexaxLF0Z0eh4UnnE9xtvdTDLMA0gPXklOjXSBek"
     
     // MARK: Создание игровой комнаты.
     func createGameRoom(adminNickname: String, roomCode: String?) async throws -> GameRoom {
@@ -132,14 +132,18 @@ class NetworkService {
         
         request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
         request.addValue(authorization, forHTTPHeaderField: "Authorization")
-        
-        let gameRoomResponce = try await URLSession.shared.data(for: request)
-        let gameRoomData = gameRoomResponce.0
-        
-        let decoder = JSONDecoder()
-        
-        let gameRooms = try decoder.decode([GameRoom].self, from: gameRoomData)
-        return gameRooms
+        do {
+            let gameRoomResponce = try await URLSession.shared.data(for: request)
+            let gameRoomData = gameRoomResponce.0
+            
+            let decoder = JSONDecoder()
+            
+            let gameRooms = try decoder.decode([GameRoom].self, from: gameRoomData)
+            return gameRooms
+        }
+        catch {
+            return nil
+        }
     }
     
     // MARK: Добавление игрока в комнату
