@@ -17,6 +17,7 @@ struct GameRoomView: View {
     @State var buttonColor: Color = .green
     @State var showErrorAlert: Bool = false
 
+
     var body: some View {
         NavigationStack {
             // TODO: В зависимости от того админ или нет показывать тот или иной экран
@@ -82,6 +83,7 @@ struct GameTopBar: View {
     @Binding var user: User
     @State var showErrorAlert: Bool = false
     @State var errorMessage: String = ""
+    @State var showAdminSettingsView: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -115,7 +117,7 @@ struct GameTopBar: View {
                     }
                     Spacer()
                     Button {
-                        // TODO: leave room
+                        // leave room
                         Task {
                             do {
                                 try await NetworkService.shared.leaveGameRoom(userId: user.id, roomId: gameRoom.id) { res in
@@ -137,21 +139,36 @@ struct GameTopBar: View {
                         Image(systemName: "arrowshape.turn.up.right")
                             .foregroundStyle(.black)
                     }
+                    
+                    if user.nickName == gameRoom.adminNickname {
+                        Button {
+                            showAdminSettingsView.toggle()
+                            
+                        } label: {
+                            Image(systemName: "pencil")
+                                .foregroundStyle(.black)
+                        }
+                    }
                     Spacer()
                     
                 }
             }
         }
         .fullScreenCover(isPresented: $leaveRoom) {
-            // TODO: Переход на другой экран всех комнат
+            // Переход на другой экран всех комнат
             AllGameRoomsView(user: $user)
+        }
+        
+        .sheet(isPresented: $showAdminSettingsView) {
+            // Переход в настройки
+            AdminSettingsView(roomId: $gameRoom.id)
         }
         .alert(isPresented: $showErrorAlert, content: {
             return Alert(title: Text(errorMessage), dismissButton: .default(Text("Ok")))
         })
     }
 }
-
+//
 //#Preview {
-//    GameRoomView(gameRoom: (GameRoom(id: "gameID", adminNickname: "adminNickName", roomCode: "roomCode", gameStatus: "Not started", currentNumberOfChips: 0)))
+//    GameRoomView(gameRoom: (GameRoom(id: "gameID", adminNickname: "adminNickName", roomCode: "roomCode", gameStatus: "Not started", currentNumberOfChips: 0)), user: <#Binding<User>#>)
 //}

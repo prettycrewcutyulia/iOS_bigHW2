@@ -22,6 +22,7 @@
 		A912A2FB2C1E058B009B1091 /* AllGameRoomsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2FA2C1E058B009B1091 /* AllGameRoomsView.swift */; };
 		A912A2FE2C1F1CFA009B1091 /* AllGameRoomsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2FD2C1F1CFA009B1091 /* AllGameRoomsViewModel.swift */; };
 		A912A3002C1F1FE6009B1091 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2FF2C1F1FE6009B1091 /* AuthService.swift */; };
+		A912A3022C1F53A8009B1091 /* AdminSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A3012C1F53A8009B1091 /* AdminSettingsView.swift */; };
 		A9FBADB62C19DD66001D802F /* ScrabbleGameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FBADB52C19DD66001D802F /* ScrabbleGameApp.swift */; };
 		A9FBADB82C19DD66001D802F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FBADB72C19DD66001D802F /* ContentView.swift */; };
 		A9FBADBA2C19DD67001D802F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9FBADB92C19DD67001D802F /* Assets.xcassets */; };
@@ -50,6 +51,7 @@
 		A912A2FA2C1E058B009B1091 /* AllGameRoomsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGameRoomsView.swift; sourceTree = "<group>"; };
 		A912A2FD2C1F1CFA009B1091 /* AllGameRoomsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGameRoomsViewModel.swift; sourceTree = "<group>"; };
 		A912A2FF2C1F1FE6009B1091 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		A912A3012C1F53A8009B1091 /* AdminSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminSettingsView.swift; sourceTree = "<group>"; };
 		A9FBADB22C19DD66001D802F /* ScrabbleGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrabbleGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9FBADB52C19DD66001D802F /* ScrabbleGameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrabbleGameApp.swift; sourceTree = "<group>"; };
 		A9FBADB72C19DD66001D802F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				A912A2FC2C1F1CDC009B1091 /* AllGameRooms */,
 				A9FBADCB2C19E7B3001D802F /* CreateGameRoomView.swift */,
 				A9FBADD32C19F5B3001D802F /* GameRoomView.swift */,
+				A912A3012C1F53A8009B1091 /* AdminSettingsView.swift */,
 			);
 			path = GameRoom;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9FBADC72C19E2D6001D802F /* GameRoom.swift in Sources */,
+				A912A3022C1F53A8009B1091 /* AdminSettingsView.swift in Sources */,
 				A9FBADB82C19DD66001D802F /* ContentView.swift in Sources */,
 				7D8BF6072C1E7D75006734FB /* ChipsOnField.swift in Sources */,
 				7D8BF6052C1E7C87006734FB /* ChipField.swift in Sources */,
