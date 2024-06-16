@@ -17,6 +17,7 @@ struct CreateGameRoomView: View {
     @State var showErrorAlert: Bool = false
     @State var isRoomPrivate: Bool = false
     @State var isRoomPublic: Bool = false
+    @State var chipsOnHand: [Chip] = []
 
     
     var body: some View {
@@ -88,7 +89,7 @@ struct CreateGameRoomView: View {
         })
         .fullScreenCover(isPresented: $showGameRoom) {
             if let unwrappedGameRoom = gameRoom {
-                GameRoomView(gameRoom: unwrappedGameRoom, user: $user)
+                GameRoomView(gameRoom: unwrappedGameRoom, user: $user, chipsOnHand: $chipsOnHand)
             }
         }
     }

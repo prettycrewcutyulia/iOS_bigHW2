@@ -10,6 +10,7 @@ import SwiftUI
 struct GameRoomView: View {
     @State var gameRoom: GameRoom
     @Binding var user: User
+    @Binding var chipsOnHand: [Chip]
     
     @State var leaveRoom: Bool = false
     
@@ -21,16 +22,20 @@ struct GameRoomView: View {
     var body: some View {
         NavigationStack {
             // TODO: В зависимости от того админ или нет показывать тот или иной экран
-            GameTopBar(gameRoom: $gameRoom, leaveRoom: $leaveRoom, user: $user)
+            GameTopBar(gameRoom: $gameRoom, leaveRoom: $leaveRoom, chipsOnHand: $chipsOnHand, user: $user)
             Spacer()
+            
+            if gameRoom.gameStatus.lowercased() == GameStatus.Running.rawValue.lowercased() {
+                ChipField(chips: Binding<[ChipsOnField]>.constant([]))
+            }
             
             // Кнопка старата/паузы игры доступна только админу
             if user.nickName == gameRoom.adminNickname {
                 CustomButton(buttonText: $buttonText, buttonColor:  $buttonColor, isDisabled: false) {
                     changeGameStatus(buttonText: buttonText)
                 }
+                .padding()
             }
-            Spacer()
         }
         .onAppear {
             getButtonValue()

@@ -12,7 +12,7 @@ struct LetterInTileCounterView: View {
     var body: some View {
         HStack {
             Text("Letter in tiles:")
-                .font(.caption)
+                .fontWeight(.bold)
             ZStack {
                 RoundedRectangle(cornerRadius: 25)
                     .fill(Color.gray)

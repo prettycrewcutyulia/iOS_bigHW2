@@ -24,6 +24,7 @@ struct AllGameRoomsView: View {
 
     @State var enteredRoomCode: String = ""
     @State var correctRoomCode: String = ""
+    @State var chipsOnHand: [Chip] = []
     
 //    @ObservedObject var viewModel: AllGameRoomsViewModel = AllGameRoomsViewModel()
     
@@ -74,7 +75,7 @@ struct AllGameRoomsView: View {
         
         .fullScreenCover(isPresented: $showGameRoom) {
             if let room = currentGameRoom {
-                GameRoomView(gameRoom: room , user: $user)
+                GameRoomView(gameRoom: room , user: $user, chipsOnHand: $chipsOnHand)
             }
         }
         

@@ -10,11 +10,13 @@ import SwiftUI
 struct GameTopBar: View {
     @Binding var gameRoom: GameRoom
     @Binding var leaveRoom: Bool
+    @Binding var chipsOnHand: [Chip]
     
     @Binding var user: User
     @State var showErrorAlert: Bool = false
     @State var errorMessage: String = ""
     @State var showAdminSettingsView: Bool = false
+    @State var showChipsOnHand = false
 
     var body: some View {
         NavigationStack {
@@ -38,7 +40,7 @@ struct GameTopBar: View {
                         }
                     }
                     Spacer()
-
+                    
                     Button {
                         // leave room
                         Task {
@@ -72,9 +74,24 @@ struct GameTopBar: View {
                                 .foregroundStyle(.black)
                         }
                     }
+                    
+                    
                 }
-                
-                LetterInTileCounterView(count: $gameRoom.currentNumberOfChips)
+                HStack {
+                    LetterInTileCounterView(count: $gameRoom.currentNumberOfChips)
+                    
+                    Button(action: {
+                        showChipsOnHand.toggle()
+                    }, label: { HStack {
+                        Text("Chips on hand")
+                        Image(systemName: "arrowshape.forward")
+                    }.padding() // Добавление отступа вокруг текста
+                            .background(RoundedRectangle(cornerRadius: 25) // Использование RoundedRectangle как фона
+                                .fill(Color.gray)) // Заполнение фона белым цветом
+                            .foregroundColor(.white) // Установка цвета текста в черный
+                        //                        .padding() // Дополнительный отступ для визуального разделения
+                    })
+                }
             }.padding()
         }
         .fullScreenCover(isPresented: $leaveRoom) {
@@ -86,6 +103,9 @@ struct GameTopBar: View {
             // Переход в настройки
             AdminSettingsView(roomId: $gameRoom.id)
         }
+        .sheet(isPresented: $showChipsOnHand) {
+            ChipsOnHand(chipsOnHand: $chipsOnHand)
+        }
         .alert(isPresented: $showErrorAlert, content: {
             return Alert(title: Text(errorMessage), dismissButton: .default(Text("Ok")))
         })
@@ -96,7 +116,7 @@ struct GameTopBar_Previews: PreviewProvider {
     static var previews: some View {
         GameTopBar(
             gameRoom: .constant(GameRoom(id: UUID(), adminNickname: "adminUser", roomCode: nil, gameStatus: GameStatus.NotStarted.rawValue, currentNumberOfChips: 100)),
-            leaveRoom: .constant(false),
+            leaveRoom: .constant(false), chipsOnHand: Binding<[Chip]>.constant([]),
             user: .constant(User(id: UUID(), nickName: "NICK"))
         )
     }

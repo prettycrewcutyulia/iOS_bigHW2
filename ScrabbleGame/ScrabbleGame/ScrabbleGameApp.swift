@@ -20,7 +20,7 @@ struct ScrabbleGameApp: App {
 //                ChipsOnField(id: UUID(), coordinate: Coordinate(x: "I", y: 8), chip: Chip(alpha: "B", point: 3))
 //            ]))
             
-            GameRoomView(gameRoom: GameRoom(id: UUID(), adminNickname: "no", roomCode: nil, gameStatus: "start", currentNumberOfChips: 4), user: Binding<User>.constant(User(id: UUID(), nickName: "no")))
+            GameRoomView(gameRoom: GameRoom(id: UUID(), adminNickname: "no", roomCode: nil, gameStatus: "running", currentNumberOfChips: 4), user: Binding<User>.constant(User(id: UUID(), nickName: "no")), chipsOnHand: Binding<[Chip]>.constant([]))
         }
     }
 }
