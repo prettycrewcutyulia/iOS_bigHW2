@@ -11,17 +11,27 @@ class ChipOnHandViewModel: ObservableObject {
     @Published var chipsOnHand: [Chip] = []
     
     func onAppear() {
-        var chips = UserDefaultsService.shared.getCards()
+        var chips = UserDefaultsService.shared.getCards() ?? []
         
-        var needCount = 7 - (chips?.count ?? 0)
+        let needCount = 7 - chips.count
         
         for _ in 0..<needCount {
-            // На самом деле делаем запрос на сервак
-            let chip = Chip(alpha: "", point: 0)
-            chips?.append(chip)
+            Task {
+                do {
+                    let user = UserDefaultsService.shared.currentUser
+                    let chip = try await NetworkService.shared.getChipsByGameId(gamerId: user.id)
+                    if let chip {
+                        DispatchQueue.main.async {
+                            chips.append(chip)
+                        }
+                    }
+                } catch {
+                    print(error)
+                }
+            }
         }
         
-        UserDefaultsService.shared.saveCards(chips ?? [])
-        chipsOnHand = chips ?? []
+        UserDefaultsService.shared.saveCards(chips)
+        chipsOnHand = chips
     }
 }

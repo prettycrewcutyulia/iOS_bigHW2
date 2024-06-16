@@ -215,6 +215,20 @@ class NetworkService {
         }
     }
     
+    // MARK: Получение всех ходов в игре
+    func getMovesByGameId(roomId: UUID) async throws -> [ChipsOnField]? {
+        return nil
+    }
+    
+    // MARK: Чей же ход?
+    func whoseMoves(roomId: UUID, moveCount: Int) async throws -> UUID {
+        let users = try await getAllGamersIntoRoom(roomId: roomId)
+        
+        let who = users?[moveCount % (users?.count ?? 1)]
+        
+        return who?.id ?? UUID()
+    }
+    
     // MARK: Добавление игрока в комнату
     func addGamerIntoRoom(gamerId: UUID, roomId: UUID) async throws -> Void {
         let dto = GamerRoomPairDTO(gamerId: gamerId, roomId: roomId)
@@ -315,11 +329,25 @@ class NetworkService {
    }
     
     @objc private func sendRequest() {
-        
-        self.getMoveEvent.send(UUID())
-        self.getCountChipsInTileEvent.send(0)
-        self.getChipsOnFieldEvent.send([])
-        print("Сработало(но тут будет запрос)")
+        Task {
+            do {
+                let roomId = UUID(uuidString: UserDefaultsService.shared.getCurrentGameId() ?? "") ?? UUID()
+                let count = try await getCurrentChipsInGameRoomById(roomId: roomId)
+                self.getCountChipsInTileEvent.send(count ?? 0)
+            } catch {
+                print(error)
+            }
+        }
+        Task {
+            do {
+                let roomId = UUID(uuidString: UserDefaultsService.shared.getCurrentGameId() ?? "") ?? UUID()
+                let chips = try await getMovesByGameId(roomId: roomId)
+                self.getChipsOnFieldEvent.send(chips ?? [])
+                
+                let who = try await whoseMoves(roomId: roomId, moveCount: ((chips?.count ?? 0) + 1))
+                self.getMoveEvent.send(who)
+            }
+        }
     }
     
     // Таймер на обновление статуса игры
@@ -372,6 +400,28 @@ class NetworkService {
         }
     }
     
+    // MARK: Получение количества фишек в комнате по id.
+    func getCurrentChipsInGameRoomById(roomId: UUID) async throws -> Int? {
+        guard let url = URL(string: "\(localhost)\(APIMethod.gameRooms.rawValue)/\(roomId)/getChipsNumber") else {
+            throw NetworkError.badURL
+        }
+        
+        var request = URLRequest(url: url)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "GET"
+        
+        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
+        request.addValue(authorization, forHTTPHeaderField: "Authorization")
+        do {
+            let (data, _) = try await URLSession.shared.data(for: request)
+            let chipsCount = try JSONDecoder().decode(Int.self, from: data)
+            return chipsCount
+        }
+        catch {
+            return nil
+        }
+    }
+    
     // MARK: Получение пользователя по id.
     private func getUserById(userId: UUID) async throws -> User? {
         guard let url = URL(string: "\(localhost)\(APIMethod.getUserById.rawValue)/\(userId)") else {
@@ -397,7 +447,29 @@ class NetworkService {
         }
     }
     
-    // TODO: Вписывайте сюда свои методы
+    // MARK: Получение фишек по id игрока.
+    func getChipsByGameId(gamerId: UUID) async throws -> Chip? {
+        guard let url = URL(string: "\(localhost)\(APIMethod.getChipByGamerId.rawValue)/\(gamerId)/getChipsNumber") else {
+            throw NetworkError.badURL
+        }
+
+        var request = URLRequest(url: url)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "GET"
+
+        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
+        request.addValue(authorization, forHTTPHeaderField: "Authorization")
+
+        do {
+            let (data, _) = try await URLSession.shared.data(for: request)
+            let chips = try JSONDecoder().decode([Chip].self, from: data)
+            return chips.first
+
+        } catch {
+            throw error // Handle and rethrow errors more effectively.
+        }
+    }
+
         
 }
 
@@ -420,6 +492,7 @@ enum APIMethod: String {
     case allGamers = "/gamersIntoRoom/roomId"
     case deleteRooms = "/gamersIntoRoom/deleteRoomWithId"
     case getUserById = "/auth/getUserById"
+    case getChipByGamerId = "/gamersIntoRoom/gamerId"
 }
 
 enum NetworkError: Error {
