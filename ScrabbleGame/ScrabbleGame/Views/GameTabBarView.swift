@@ -60,6 +60,12 @@ struct GameTopBar: View {
                                     switch res {
                                     case .success(_):
                                         leaveRoom.toggle()
+                                        if gameRoom.adminNickname == user.nickName {
+                                            // Остановка
+                                            Task {
+                                                try await NetworkService.shared.changeGameStatus(gameStatus: GameStatus.End, roomId: gameRoom.id)
+                                            }
+                                        }
                                     case .failure(let failure):
                                         print(failure.localizedDescription)
                                         showErrorAlert.toggle()
@@ -144,7 +150,7 @@ struct GameTopBar: View {
         
         .sheet(isPresented: $showAdminSettingsView) {
             // Переход в настройки
-            AdminSettingsView(roomId: $gameRoom.id)
+            AdminSettingsView(viewModel: AdminSettingsViewModel(), roomId: $gameRoom.id)
         }
         .sheet(isPresented: $showChipsOnHand) {
             ChipsOnHand()

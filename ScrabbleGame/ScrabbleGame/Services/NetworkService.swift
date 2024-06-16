@@ -6,21 +6,23 @@
 //
 
 import Foundation
+import Combine
 
 class NetworkService {
     static let shared = NetworkService();
-    
+    let getRoomStatusEvent = PassthroughSubject<String, Never>()
     private init() {}
     
     private let localhost = "http://127.0.0.1:8080"
     
     // TODO: Внимание! Это пока заглушки! Когда будет готов модуль с авторизацией,
     // TODO: сюда нужно будет передавать api key и header для авторизации
-    private let apiKey = "4fdce876-b9fc-4f61-b702-decc73267adb"
+    private let apiKey = "daabf827-b319-4e69-8537-f08f27a1858c"
     
-    private let authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJBQjZCRDdGNS1CMzA5LTQwNDgtQTY3OC05MEU2RDZGRDAyQTEiLCJleHAiOjE3MTg2NDMxNDAuODM0NzA3fQ.JswrBAUEWjXS_oHd7a4eSnJUwL0iOcnDX6zlhj0gTPg"
-//    private let authorization = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MTg2NDM0ODMuMjEwNTY3LCJ1c2VySUQiOiIyMERGMjRFRC04M0QyLTQ2OUItODJCMC05REVFMzVCQzMxNTYifQ.0b-OwJqfE26zLCFQCpCoDe1CIYIMXxdAFFT_6BO7TNI"
+    private let authorization = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySUQiOiJBQjZCRDdGNS1CMzA5LTQwNDgtQTY3OC05MEU2RDZGRDAyQTEiLCJleHAiOjE3MTg2NTUxNjEuMjU0Nzg2fQ.NGFrarcnVfeKUyaJ2R6xJV5SyontP9H1gijjzJZltOU"
+
     private var timerGameRoomView: Timer?
+    private var statusTimer: Timer?
     
     // MARK: Создание игровой комнаты.
     func createGameRoom(adminNickname: String, roomCode: String?) async throws -> GameRoom {
@@ -148,6 +150,32 @@ class NetworkService {
         }
     }
     
+    // MARK: Получение статуса комнаты по id.
+    func getGameRoomStatusById(roomId: UUID) async throws -> String? {
+        guard let url = URL(string: "\(localhost)\(APIMethod.gameRooms.rawValue)/\(roomId)") else {
+            throw NetworkError.badURL
+        }
+        
+        var request = URLRequest(url: url)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "GET"
+        
+        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
+        request.addValue(authorization, forHTTPHeaderField: "Authorization")
+        do {
+            let gameRoomResponce = try await URLSession.shared.data(for: request)
+            let gameRoomData = gameRoomResponce.0
+            
+            let decoder = JSONDecoder()
+            
+            let gameRooms = try decoder.decode(GameRoom.self, from: gameRoomData)
+            return gameRooms.gameStatus
+        }
+        catch {
+            return nil
+        }
+    }
+    
     // MARK: Получение всех игроков по комнате.
     func getAllGamersIntoRoom(roomId: UUID) async throws -> [User]? {
         guard let url = URL(string: "\(localhost)\(APIMethod.allGamers.rawValue)/\(roomId)/gamersIds") else {
@@ -241,7 +269,6 @@ class NetworkService {
     }
     
     func fetchLeaderboard(forRoomId roomId: UUID) async -> [ScoreboardModel]? {
-        
         guard let url = URL(string: "\(localhost)/gameRooms/\(roomId)/getLeaderBoard") else {
             return nil
         }
@@ -267,23 +294,47 @@ class NetworkService {
     }
     
     // Метод для старта таймера
-       func startGameRoomViewTimer() {
+    func startGameRoomViewTimer() {
            // Настройка таймера для вызова метода sendRequest каждые 30 секунд
            timerGameRoomView = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(sendRequest), userInfo: nil, repeats: true)
            
            // Немедленный первый запрос
            sendRequest()
-       }
+    }
        
-       // Метод для остановки таймера
-       func stopGameRoomViewTimer() {
-           timerGameRoomView?.invalidate()
-           timerGameRoomView = nil
-           print("Сработало(таймер выключился)")
-       }
+   // Метод для остановки таймера
+   func stopGameRoomViewTimer() {
+       timerGameRoomView?.invalidate()
+       timerGameRoomView = nil
+       print("Сработало(таймер выключился)")
+   }
     
     @objc private func sendRequest() {
         print("Сработало(но тут будет запрос)")
+    }
+    
+    // Таймер на обновление статуса игры
+    func startGameRoomStatusTimer(roomId: UUID) {
+        statusTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(sendUpdateRoomStatusRequest), userInfo: nil, repeats: true)
+        
+         sendUpdateRoomStatusRequest()
+    }
+    
+    // Метод для остановки таймера
+    func stopGameRoomStatusTimer() {
+        statusTimer?.invalidate()
+        statusTimer = nil
+    }
+    
+    @objc private func sendUpdateRoomStatusRequest()  {
+        Task {
+            do {
+                var gameStatus = try await getGameRoomStatusById(roomId: UUID(uuidString: UserDefaultsService.shared.getCurrentGameId() ?? "") ?? UUID())
+                getRoomStatusEvent.send(gameStatus ?? "Not Started")
+            } catch {
+                print(error)
+            }
+        }
     }
     
     // MARK: - Private functions

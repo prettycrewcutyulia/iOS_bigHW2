@@ -31,6 +31,9 @@ struct GameRoomView: View {
                 .padding()
             }
         }
+        .fullScreenCover(isPresented: $viewModel.showWinView) {
+            WinsView(viewModel: WinsViewModel())
+        }
         .onAppear {
             viewModel.getButtonValue()
         }

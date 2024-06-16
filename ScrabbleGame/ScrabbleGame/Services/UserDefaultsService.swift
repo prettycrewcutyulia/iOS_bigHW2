@@ -14,7 +14,7 @@ class UserDefaultsService {
     
     // TODO: Кто делает авторизацию - сюда присваивать текущего пользователя.
     var currentUser: User {
-        return User(id: UUID(uuidString: "38B6A72A-4580-4736-B3EE-C33D3B060F7B")!, nickName: "irina")
+        return User(id: UUID(uuidString: "ab6bd7f5-b309-4048-a678-90e6d6fd02a1")!, nickName: "IRINA")
     }
     
     // MARK: - Save and get to/from userDefaults current game id.
