@@ -12,6 +12,7 @@ import SwiftUI
 struct ChipField: View {
     @Binding var chips: [ChipsOnField]
     @State private var zoom = 0.6
+    @State private var selectedCoordinates =  Set<Coordinate>()
     
     let letters = Array("ABCDEFGHIJKLMNO")
     
@@ -40,7 +41,8 @@ struct ChipField: View {
                                 let coordinate = Coordinate(x: String(letters[col]), y: row + 1) // Обновляем координаты y
                         
                                 let chip = chips.first { $0.coordinate == coordinate }
-                                Cell(chip: chip, size: size, coordinate: coordinate)
+                                Cell(chip: chip, size: size, coordinate: coordinate,
+                                     isSelected: selectedCoordinates.contains(coordinate))
                                     .onTapGesture {
                                         print("Выбрали")
                                         selectChip(at: coordinate)
@@ -70,7 +72,11 @@ struct ChipField: View {
     
     private func selectChip(at coordinate: Coordinate) {
         if let index = chips.firstIndex(where: { $0.coordinate == coordinate }) {
-            chips[index].isSelected.toggle()
+            if(selectedCoordinates.contains(coordinate)) {
+                selectedCoordinates.remove(coordinate)
+            } else {
+                selectedCoordinates.insert(coordinate)
+            }
         } else {
             print("NotFound")
         }
@@ -81,17 +87,18 @@ struct Cell: View {
     var chip: ChipsOnField?
     var size: CGFloat
     var coordinate: Coordinate
+    var isSelected: Bool
     
     var body: some View {
-        let selected = chip?.isSelected ?? false
-        let borderColor = selected ? Color.yellow : Color.black
+        let borderColor = isSelected ? Color.yellow : Color.black
         let bonus = TileConstants.scrabbleBoard["\(coordinate.x)\(coordinate.y)"] ?? .none
+        let borderWidth = isSelected ? 5 : 0.3
         
         ZStack {
             Rectangle()
                 .fill(backgroundColor(for: bonus))
                 .frame(width: size, height: size)
-                .border(borderColor, width: 0.3)
+                .border(borderColor, width: borderWidth)
             if let chip = chip {
                 Text(chip.chip.alpha)
             } else {
@@ -140,8 +147,8 @@ struct Cell: View {
 struct ChipField_Previews: PreviewProvider {
     static var previews: some View {
         ChipField(chips: .constant([
-            ChipsOnField(id: UUID(), coordinate: Coordinate(x: "H", y: 8), chip: Chip(alpha: "A", point: 1), isSelected: false),
-            ChipsOnField(id: UUID(), coordinate: Coordinate(x: "I", y: 8), chip: Chip(alpha: "B", point: 3), isSelected: false)
+            ChipsOnField(id: UUID(), coordinate: Coordinate(x: "H", y: 8), chip: Chip(alpha: "A", point: 1)),
+            ChipsOnField(id: UUID(), coordinate: Coordinate(x: "I", y: 8), chip: Chip(alpha: "B", point: 3))
         ]))
         .previewLayout(.sizeThatFits)
         .padding()
