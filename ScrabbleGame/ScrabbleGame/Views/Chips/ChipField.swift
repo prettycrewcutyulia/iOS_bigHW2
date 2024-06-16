@@ -11,7 +11,7 @@ import SwiftUI
 
 struct ChipField: View {
     @Binding var chips: [ChipsOnField]
-    @State private var zoom = 0.6
+    @State private var zoom: CGFloat = 0.6
     @State private var selectedCoordinates =  Set<Coordinate>()
     
     let letters = Array("ABCDEFGHIJKLMNO")
@@ -21,9 +21,8 @@ struct ChipField: View {
             let size = geometry.size.width / 10
             let gridSize = size * 10
             
-            VStack {
-                Spacer()
-                VStack(spacing: 0) {
+            ScrollView([.horizontal, .vertical]) {
+                VStack(alignment:.center, spacing: 0) {
                     HStack(spacing: 0) {
                         Spacer().frame(width: size, height: size)
                         ForEach(0..<15, id: \.self) { col in
@@ -51,9 +50,9 @@ struct ChipField: View {
                         }
                     }
                 }
-                Spacer()
+                .scaleEffect(zoom)
             }
-            .frame(width: gridSize, height: gridSize)
+            .frame(maxWidth: .infinity, maxHeight: gridSize)
             .scaleEffect(zoom)
             .gesture(MagnificationGesture() // Добавление жеста масштабирования
                            .onChanged { value in
