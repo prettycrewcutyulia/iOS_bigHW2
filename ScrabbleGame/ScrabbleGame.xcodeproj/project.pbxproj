@@ -76,7 +76,6 @@
 			children = (
 				486E90A42C1F02D5009FF728 /* ScoreboardView.swift */,
 				486E90A72C1F02EC009FF728 /* ScoreboardViewModel.swift */,
-				486E90A92C1F03B2009FF728 /* ScoreboardModel.swift */,
 			);
 			path = Scoreboard;
 			sourceTree = "<group>";
@@ -152,6 +151,7 @@
 		A9FBADC82C19E74D001D802F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				486E90A92C1F03B2009FF728 /* ScoreboardModel.swift */,
 				7D8BF6082C1E7DBA006734FB /* Chips */,
 				A9FBADC62C19E2D6001D802F /* GameRoom.swift */,
 				A912A2F62C1E00DE009B1091 /* User.swift */,

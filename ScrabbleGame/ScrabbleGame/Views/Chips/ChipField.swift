@@ -42,6 +42,7 @@ struct ChipField: View {
                                 let chip = chips.first { $0.coordinate == coordinate }
                                 Cell(chip: chip, size: size, coordinate: coordinate)
                                     .onTapGesture {
+                                        print("Выбрали")
                                         selectChip(at: coordinate)
                                     }
                             }

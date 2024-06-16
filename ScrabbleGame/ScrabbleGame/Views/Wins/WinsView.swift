@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WinsView: View {
-
+    
     @ObservedObject var viewModel: WinsViewModel = WinsViewModel()
     
     var body: some View {
@@ -16,25 +16,29 @@ struct WinsView: View {
             Text("Game over!")
                 .font(.title)
                 .padding()
-
+            
             Text(winnerMessage())
                 .font(.headline)
                 .onAppear {
                     viewModel.onAppear()
                 }
-
+            
             ScoreboardViewList(scoreboardModels: viewModel.scoreboardModels)
-
-            NavigationLink(destination: viewModel.nextScreen, isActive: $viewModel.navigateToNextScreen) {
-                CustomButton(buttonText:  Binding<String>.constant("Done"), buttonColor: Binding<Color>.constant(.black), isDisabled: false) {
-                    viewModel.onButtonDoneTap()
-                }
+            
+            CustomButton(buttonText:  Binding<String>.constant("Done"), buttonColor: Binding<Color>.constant(.black), isDisabled: false) {
+                viewModel.onButtonDoneTap()
+            }
+            .fullScreenCover(isPresented: $viewModel.navigateToNextScreen) {
+                viewModel.nextScreen
             }
         }
     }
     
     // Функция для определения победителя
     func winnerMessage() -> String {
+        if (viewModel.scoreboardModels.count == 0) {
+            return "No players("
+        }
         if (viewModel.scoreboardModels.count < 2) {
             return "Win \(viewModel.scoreboardModels[0])!"
         }
