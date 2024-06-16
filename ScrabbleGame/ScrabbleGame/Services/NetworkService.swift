@@ -19,31 +19,126 @@ class NetworkService {
     private init() {}
     
     private let localhost = "http://127.0.0.1:8080"
+    private let baseUrl = "http://127.0.0.1:8080"
     
     // TODO: Внимание! Это пока заглушки! Когда будет готов модуль с авторизацией,
     // TODO: сюда нужно будет передавать api key и header для авторизации
-    private let apiKey = "daabf827-b319-4e69-8537-f08f27a1858c"
+    private let apiKey = "47b993ed-a67c-48a4-815c-ffcc0096f28e"
     
-    private let authorization = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySUQiOiJBQjZCRDdGNS1CMzA5LTQwNDgtQTY3OC05MEU2RDZGRDAyQTEiLCJleHAiOjE3MTg2NTUxNjEuMjU0Nzg2fQ.NGFrarcnVfeKUyaJ2R6xJV5SyontP9H1gijjzJZltOU"
+    private var authorization = "Bearer"
+
+    func setAuthToken(token: String) {
+        authorization = "Bearer \(token)"
+    }
 
     private var timerGameRoomView: Timer?
     private var statusTimer: Timer?
-    
+
+    private func getApiRequest(_ method: APIMethod, path: String = "") throws -> URLRequest {
+        guard let url = URL(string: "\(baseUrl)\(method.rawValue)/\(path)") else {
+            throw NetworkError.badURL
+        }
+        var request = URLRequest(url: url)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
+        request.addValue(authorization, forHTTPHeaderField: "Authorization")
+        return request
+    }
+
+    func registerUser(nickName: String, password: String) async throws -> RegistrationResult {
+        var request = try getApiRequest(.register)
+        request.httpMethod = "POST"
+
+        let requestBody: [String: Any] = [
+            "nickName": nickName,
+            "password": password,
+        ]
+
+        let data = try JSONSerialization.data(withJSONObject: requestBody)
+        request.httpBody = data
+
+        let (responseData, response) = try await URLSession.shared.data(for: request)
+
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NetworkError.invalidResponse
+        }
+
+        switch httpResponse.statusCode {
+        case 200:
+            // Успешный ответ
+            guard let jsonObject = try? JSONSerialization.jsonObject(with: responseData, options: []),
+                  let jsonDict = jsonObject as? [String: Any],
+                  let _ = jsonDict["id"] as? String else {
+                throw NetworkError.decodingError
+            }
+            return .success
+
+        case 400:
+            // Ошибка клиента
+            guard let jsonObject = try? JSONSerialization.jsonObject(with: responseData, options: []),
+                  let jsonDict = jsonObject as? [String: Any],
+                  let reason = jsonDict["reason"] as? String else {
+                throw NetworkError.decodingError
+            }
+            return .error(message: reason)
+
+        default:
+            // Неизвестная ошибка
+            return .error(message: "Unknown error occurred.")
+        }
+    }
+
+    func loginUser(nickName: String, password: String) async throws -> LoginResult {
+        var request = try getApiRequest(.login)
+        request.httpMethod = "POST"
+
+        let requestBody: [String: Any] = [
+            "nickName": nickName,
+            "password": password,
+        ]
+
+        let data = try JSONSerialization.data(withJSONObject: requestBody)
+        request.httpBody = data
+
+        let (responseData, response) = try await URLSession.shared.data(for: request)
+
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NetworkError.invalidResponse
+        }
+
+        switch httpResponse.statusCode {
+        case 200:
+            // Успешный ответ
+            guard let jsonObject = try? JSONSerialization.jsonObject(with: responseData, options: []),
+                  let jsonDict = jsonObject as? [String: Any],
+                  let id = jsonDict["id"] as? String,
+                  let token = jsonDict["token"] as? String else {
+                throw NetworkError.decodingError
+            }
+            return .success(id: id, token: token)
+
+        case 400:
+            // Ошибка клиента
+            guard let jsonObject = try? JSONSerialization.jsonObject(with: responseData, options: []),
+                  let jsonDict = jsonObject as? [String: Any],
+                  let reason = jsonDict["reason"] as? String else {
+                throw NetworkError.decodingError
+            }
+            return .error(message: reason)
+
+        default:
+            // Неизвестная ошибка
+            return .error(message: "Unknown error occurred.")
+        }
+    }
+
     // MARK: Создание игровой комнаты.
     func createGameRoom(adminNickname: String, roomCode: String?) async throws -> GameRoom {
         let dto = GameRoomDTO(adminNickname: adminNickname, roomCode: roomCode, gameStatus: GameStatus.NotStarted.rawValue, currentNumberOfChips: 40)
-        
-        guard let url = URL(string: "\(localhost)\(APIMethod.gameRooms.rawValue)") else {
-            throw NetworkError.badURL
-        }
-        
-        var request = URLRequest(url: url)
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        var request = try getApiRequest(.gameRooms)
         request.httpMethod = "POST"
-        
-        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
-        request.addValue(authorization, forHTTPHeaderField: "Authorization")
-        
+
         let encoder = JSONEncoder()
         let data = try encoder.encode(dto)
         request.httpBody = data
@@ -71,19 +166,11 @@ class NetworkService {
         case .NotStarted:
             command = "stop"
         }
+
         
-        guard let url = URL(string: "\(localhost)\(APIMethod.gameRooms.rawValue)/\(roomId)/\(command)") else {
-            throw NetworkError.badURL
-        }
-        
-        var request = URLRequest(url: url)
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        var request = try getApiRequest(.gameRooms, path: "\(roomId)/\(command)")
         request.httpMethod = "PUT"
-        
-        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
-        request.addValue(authorization, forHTTPHeaderField: "Authorization")
-        
-        
+
         let gameRoomResponce = try await URLSession.shared.data(for: request)
         let gameRoomData = gameRoomResponce.0
         
@@ -95,18 +182,11 @@ class NetworkService {
     
     // MARK: Выход из комнаты
     func leaveGameRoom(userId: UUID, roomId: UUID, completion: @escaping (Result<Void, Error>) -> Void) async throws  {
-        guard let url = URL(string: "\(localhost)\(APIMethod.leaveRoom.rawValue)/\(userId)/withRoom/\(roomId)") else {
-            throw NetworkError.badURL
-        }
-        print(url)
         
-        var request = URLRequest(url: url)
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        var request = try getApiRequest(.leaveRoom,
+                            path:"\(userId)/withRoom/\(roomId)"
+        )
         request.httpMethod = "DELETE"
-        
-        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
-        request.addValue(authorization, forHTTPHeaderField: "Authorization")
-        
         let session = URLSession.shared
         
         // Создаем задачу для выполнения запроса
@@ -131,16 +211,9 @@ class NetworkService {
     
     // MARK: Получение всех комнат.
     func getAllGameRooms() async throws -> [GameRoom]? {
-        guard let url = URL(string: "\(localhost)\(APIMethod.gameRooms.rawValue)") else {
-            throw NetworkError.badURL
-        }
-        
-        var request = URLRequest(url: url)
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        var request = try getApiRequest(.gameRooms)
         request.httpMethod = "GET"
-        
-        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
-        request.addValue(authorization, forHTTPHeaderField: "Authorization")
+
         do {
             let gameRoomResponce = try await URLSession.shared.data(for: request)
             let gameRoomData = gameRoomResponce.0
@@ -160,19 +233,19 @@ class NetworkService {
         guard let url = URL(string: "\(localhost)\(APIMethod.gameRooms.rawValue)/\(roomId)") else {
             throw NetworkError.badURL
         }
-        
+
         var request = URLRequest(url: url)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "GET"
-        
+
         request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
         request.addValue(authorization, forHTTPHeaderField: "Authorization")
         do {
             let gameRoomResponce = try await URLSession.shared.data(for: request)
             let gameRoomData = gameRoomResponce.0
-            
+
             let decoder = JSONDecoder()
-            
+
             let gameRooms = try decoder.decode(GameRoom.self, from: gameRoomData)
             return gameRooms.gameStatus
         }
@@ -180,21 +253,13 @@ class NetworkService {
             return nil
         }
     }
-    
+
     // MARK: Получение всех игроков по комнате.
     func getAllGamersIntoRoom(roomId: UUID) async throws -> [User]? {
-        guard let url = URL(string: "\(localhost)\(APIMethod.allGamers.rawValue)/\(roomId)/gamersIds") else {
-            throw NetworkError.badURL
-        }
-        
         var users = [User]()
-        print(url)
-        var request = URLRequest(url: url)
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        var request = try getApiRequest(.allGamers, path: "\(roomId)/gamersIds")
         request.httpMethod = "GET"
-        
-        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
-        request.addValue(authorization, forHTTPHeaderField: "Authorization")
+
         do {
             let gamersResponce = try await URLSession.shared.data(for: request)
             let gamersData = gamersResponce.0
@@ -219,31 +284,23 @@ class NetworkService {
     func getMovesByGameId(roomId: UUID) async throws -> [ChipsOnField]? {
         return nil
     }
-    
+
     // MARK: Чей же ход?
     func whoseMoves(roomId: UUID, moveCount: Int) async throws -> UUID {
         let users = try await getAllGamersIntoRoom(roomId: roomId)
-        
+
         let who = users?[moveCount % (users?.count ?? 1)]
-        
+
         return who?.id ?? UUID()
     }
-    
+
     // MARK: Добавление игрока в комнату
     func addGamerIntoRoom(gamerId: UUID, roomId: UUID) async throws -> Void {
         let dto = GamerRoomPairDTO(gamerId: gamerId, roomId: roomId)
-
-        guard let url = URL(string: "\(localhost)/gamersIntoRoom") else {
-            throw NetworkError.badURL
-        }
         
-        var request = URLRequest(url: url)
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        var request = try getApiRequest(.gamersIntoRoom)
         request.httpMethod = "POST"
-        
-        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
-        request.addValue(authorization, forHTTPHeaderField: "Authorization")
-        
+
         let encoder = JSONEncoder()
         let data = try encoder.encode(dto)
         request.httpBody = data
@@ -253,18 +310,9 @@ class NetworkService {
     
     // MARK: Удаление комнаты по id.
     func deleteRoomById(roomId: UUID, completion: @escaping (Result<Void, Error>) -> Void) async throws {
-        guard let url = URL(string: "\(localhost)\(APIMethod.deleteRooms.rawValue)/\(roomId)") else {
-            throw NetworkError.badURL
-        }
-        print(url)
-        
-        var request = URLRequest(url: url)
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        var request = try getApiRequest(.deleteRooms, path: "\(roomId)")
         request.httpMethod = "DELETE"
-        
-        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
-        request.addValue(authorization, forHTTPHeaderField: "Authorization")
-        
+
         let session = URLSession.shared
         
         // Создаем задачу для выполнения запроса
@@ -288,16 +336,15 @@ class NetworkService {
     }
     
     func fetchLeaderboard(forRoomId roomId: UUID) async -> [ScoreboardModel]? {
-        guard let url = URL(string: "\(localhost)/gameRooms/\(roomId)/getLeaderBoard") else {
+
+        var request: URLRequest
+        do {
+            request = try getApiRequest(.gameRooms, path: "\(roomId)/getLeaderBoard");
+            request.httpMethod = "GET"
+        } catch {
             return nil
         }
-        print(url)
-        var request = URLRequest(url: url)
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "GET"
-        
-        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
-        request.addValue(authorization, forHTTPHeaderField: "Authorization")
+
         do {
             let scoreResponce = try await URLSession.shared.data(for: request)
             let gamersData = scoreResponce.0
@@ -343,26 +390,26 @@ class NetworkService {
                 let roomId = UUID(uuidString: UserDefaultsService.shared.getCurrentGameId() ?? "") ?? UUID()
                 let chips = try await getMovesByGameId(roomId: roomId)
                 self.getChipsOnFieldEvent.send(chips ?? [])
-                
+
                 let who = try await whoseMoves(roomId: roomId, moveCount: ((chips?.count ?? 0) + 1))
                 self.getMoveEvent.send(who)
             }
         }
     }
-    
+
     // Таймер на обновление статуса игры
     func startGameRoomStatusTimer(roomId: UUID) {
         statusTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(sendUpdateRoomStatusRequest), userInfo: nil, repeats: true)
-        
+
          sendUpdateRoomStatusRequest()
     }
-    
+
     // Метод для остановки таймера
     func stopGameRoomStatusTimer() {
         statusTimer?.invalidate()
         statusTimer = nil
     }
-    
+
     @objc private func sendUpdateRoomStatusRequest()  {
         Task {
             do {
@@ -405,11 +452,11 @@ class NetworkService {
         guard let url = URL(string: "\(localhost)\(APIMethod.gameRooms.rawValue)/\(roomId)/getChipsNumber") else {
             throw NetworkError.badURL
         }
-        
+
         var request = URLRequest(url: url)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "GET"
-        
+
         request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
         request.addValue(authorization, forHTTPHeaderField: "Authorization")
         do {
@@ -421,18 +468,12 @@ class NetworkService {
             return nil
         }
     }
-    
+
     // MARK: Получение пользователя по id.
     private func getUserById(userId: UUID) async throws -> User? {
-        guard let url = URL(string: "\(localhost)\(APIMethod.getUserById.rawValue)/\(userId)") else {
-            throw NetworkError.badURL
-        }
-        var request = URLRequest(url: url)
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        var request = try getApiRequest(.getUserById, path: "\(userId)")
         request.httpMethod = "GET"
-        
-        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
-        request.addValue(authorization, forHTTPHeaderField: "Authorization")
+
         do {
             let gamersResponce = try await URLSession.shared.data(for: request)
             let gamersData = gamersResponce.0
@@ -487,15 +528,14 @@ struct GamerRoomPairDTO: Codable {
 
 // TODO: Вписывайте сюда свои ендпоинты
 enum APIMethod: String {
+    case register = "/auth/register"
+    case login = "/auth/login"
     case gameRooms = "/gameRooms"
     case leaveRoom = "/gamersIntoRoom/deleteGamer"
     case allGamers = "/gamersIntoRoom/roomId"
+    case gamersIntoRoom = "/gamersIntoRoom"
     case deleteRooms = "/gamersIntoRoom/deleteRoomWithId"
     case getUserById = "/auth/getUserById"
     case getChipByGamerId = "/gamersIntoRoom/gamerId"
-}
-
-enum NetworkError: Error {
-    case badURL
 }
 

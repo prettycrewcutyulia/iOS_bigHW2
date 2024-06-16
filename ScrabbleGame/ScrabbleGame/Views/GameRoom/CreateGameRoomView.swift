@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CreateGameRoomView: View {
-    @Binding var user: User
+    @State private var user: User = User.Default
     
     @State var roomCode: String = ""
     @State var gameRoom: GameRoom? = nil
@@ -84,6 +84,9 @@ struct CreateGameRoomView: View {
                 }
                 
             }
+        }
+        .onAppear {
+            user = UserDefaultsService.shared.getCurrentUser()
         }
         .alert(isPresented: $showErrorAlert, content: {
             return Alert(title: Text("Произошла ошибка при создании комнаты"), dismissButton: .default(Text("Ok")))

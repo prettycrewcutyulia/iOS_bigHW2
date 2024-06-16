@@ -11,7 +11,7 @@ struct GameTopBar: View {
     @Binding var gameRoom: GameRoom
     @Binding var leaveRoom: Bool
     
-    @Binding var user: User
+    var user =  UserDefaultsService.shared.getCurrentUser()
     @State var showErrorAlert: Bool = false
     @State var errorMessage: String = ""
     @State var showAdminSettingsView: Bool = false
@@ -144,7 +144,7 @@ struct GameTopBar: View {
         }
         .fullScreenCover(isPresented: $leaveRoom) {
             // Переход на другой экран всех комнат
-            AllGameRoomsView(user: $user)
+            AllGameRoomsView()
         }
         
         .sheet(isPresented: $showAdminSettingsView) {
@@ -169,7 +169,7 @@ struct GameTopBar_Previews: PreviewProvider {
         GameTopBar(
             gameRoom: .constant(GameRoom(id: UUID(), adminNickname: "adminUser", roomCode: nil, gameStatus: GameStatus.NotStarted.rawValue, currentNumberOfChips: 100)),
             leaveRoom: .constant(false),
-            user: .constant(User(id: UUID(), nickName: "NICK")), movePlayerId: Binding<UUID>.constant(UUID())
+            movePlayerId: Binding<UUID>.constant(UUID())
         )
     }
 }

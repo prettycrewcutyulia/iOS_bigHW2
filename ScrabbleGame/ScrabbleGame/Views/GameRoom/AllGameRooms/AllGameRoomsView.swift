@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AllGameRoomsView: View {
     @State var gameRooms: [GameRoom] = [GameRoom]()
-//    @State var user: User = AuthService.shared.currentUser
+    private var user: User = UserDefaultsService.shared.getCurrentUser()
     @State var currentGameRoom: GameRoom? = nil
 
     @State var showErrorAlert: Bool = false
@@ -17,8 +17,7 @@ struct AllGameRoomsView: View {
     
     @State var showPasswordAlert: Bool = false
     @State var showGameRoom: Bool = false
-    
-    @Binding var user: User
+
     @State var showCreateGameRoomView: Bool = false
     @State var tappedGameRoom: GameRoom? = nil
 
@@ -81,7 +80,7 @@ struct AllGameRoomsView: View {
         }
         
         .fullScreenCover(isPresented: $showCreateGameRoomView) {
-            CreateGameRoomView(user: .constant(user))
+            CreateGameRoomView()
         }
         
         .alert("Enter room code", isPresented: $showPasswordAlert) {
