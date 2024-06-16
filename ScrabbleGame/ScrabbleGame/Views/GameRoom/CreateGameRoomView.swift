@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CreateGameRoomView: View {
-    @Binding var user: User
+    private var user: User = UserDefaultsService.shared.getCurrentUser()
     
     @State var roomCode: String = ""
     @State var gameRoom: GameRoom? = nil

@@ -15,7 +15,7 @@ class GameRoomViewModel: ObservableObject {
     @Published var showErrorAlert: Bool = false
     @Published var showWinView: Bool = false
     @Published var leaveRoom: Bool = false
-    @Published var user = UserDefaultsService.shared.currentUser
+    @Published var user = UserDefaultsService.shared.getCurrentUser()
     @Published var movePlayerId: UUID = UUID()
     @Published var countChipsInTile: Int = 0
     @Published var chipsOnField: [ChipsOnField] = []

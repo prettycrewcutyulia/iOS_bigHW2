@@ -7,9 +7,8 @@
 
 import Foundation
 
-// TODO: Создала сущность, так мне нужно использовать id пользователя.
-// TODO: Кто занимается пользователями, используйте ее пожалуйста
 struct User: Identifiable, Codable {
     let id: UUID
     let nickName: String
+    let token: String
 }

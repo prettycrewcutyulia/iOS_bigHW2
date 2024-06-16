@@ -18,7 +18,7 @@ class ChipOnHandViewModel: ObservableObject {
         for _ in 0..<needCount {
             Task {
                 do {
-                    let user = UserDefaultsService.shared.currentUser
+                    let user = UserDefaultsService.shared.getCurrentUser()
                     let chip = try await NetworkService.shared.getChipsByGameId(gamerId: user.id)
                     if let chip {
                         DispatchQueue.main.async {

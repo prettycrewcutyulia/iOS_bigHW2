@@ -13,7 +13,7 @@ class WinsViewModel: ObservableObject {
     @Published var scoreboardModels: [ScoreboardModel] = []
     @Published var navigateToNextScreen = false
 
-    let nextScreen = AllGameRoomsView(user: Binding<User>.constant(User(id: UUID(uuidString: "ab6bd7f5-b309-4048-a678-90e6d6fd02a1")!, nickName: "IRINA")))
+    let nextScreen = AllGameRoomsView()
     
     init() {
         onAppear()

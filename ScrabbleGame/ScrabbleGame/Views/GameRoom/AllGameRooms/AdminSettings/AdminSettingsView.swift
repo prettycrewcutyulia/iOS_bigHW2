@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AdminSettingsView: View {
     @StateObject var viewModel: AdminSettingsViewModel
-     var user = UserDefaultsService.shared.currentUser
+     var user = UserDefaultsService.shared.getCurrentUser()
 
     var roomId: UUID
 

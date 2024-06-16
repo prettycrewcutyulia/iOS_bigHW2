@@ -12,11 +12,32 @@ class UserDefaultsService {
     
     private init() {}
     
-    // TODO: Кто делает авторизацию - сюда присваивать текущего пользователя.
-    var currentUser: User {
-        return User(id: UUID(uuidString: "ab6bd7f5-b309-4048-a678-90e6d6fd02a1")!, nickName: "IRINA")
+    func getCurrentUser() -> User {
+        if (currentUser == nil) {
+            let id = UserDefaults.standard.string(forKey: "currentUserId")
+            let nickName = UserDefaults.standard.string(forKey: "currentUserNickName")
+            let token = UserDefaults.standard.string(forKey: "currentUserToken")
+            currentUser = User(id: UUID(uuidString: id!)!, nickName: nickName!, token: token!)
+        }
+        return currentUser!
     }
-    
+
+    private var currentUser: User?
+
+    func setCurrentUser(id: String, nickName: String, token: String) {
+        UserDefaults.standard.set(id, forKey: "currentUserId")
+        UserDefaults.standard.set(nickName, forKey: "currentUserNickName")
+        UserDefaults.standard.set(token, forKey: "currentUserToken")
+        currentUser = User(id: UUID(uuidString: id)!, nickName: nickName, token: token)
+    }
+
+    func clearCurrentUser() {
+            UserDefaults.standard.removeObject(forKey: "currentUserId")
+            UserDefaults.standard.removeObject(forKey: "currentUserNickName")
+            UserDefaults.standard.removeObject(forKey: "currentUserToken")
+            currentUser = nil
+        }
+
     // MARK: - Save and get to/from userDefaults current game id.
     func saveCurrentGameId(id: String) {
         UserDefaults.standard.set(id, forKey: "currentGameId")

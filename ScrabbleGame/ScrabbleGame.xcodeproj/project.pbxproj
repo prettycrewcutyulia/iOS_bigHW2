@@ -25,6 +25,11 @@
 		7D8BF60A2C1E7DCC006734FB /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6092C1E7DCC006734FB /* Coordinate.swift */; };
 		7D8BF60C2C1E7DE4006734FB /* Chip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF60B2C1E7DE4006734FB /* Chip.swift */; };
 		7D8BF60E2C1E9248006734FB /* ChipConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF60D2C1E9248006734FB /* ChipConstants.swift */; };
+		7D8BF6112C20C04E006734FB /* RegistrationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6102C20C04E006734FB /* RegistrationResult.swift */; };
+		7D8BF6132C20C2F5006734FB /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6122C20C2F5006734FB /* NetworkError.swift */; };
+		7D8BF6152C20C479006734FB /* LoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6142C20C479006734FB /* LoginResult.swift */; };
+		7D8BF6182C20C4F9006734FB /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6172C20C4F9006734FB /* AuthView.swift */; };
+		7D8BF61A2C20C629006734FB /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6192C20C629006734FB /* AuthViewModel.swift */; };
 		A912A2F42C1DE864009B1091 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2F32C1DE864009B1091 /* Enums.swift */; };
 		A912A2F72C1E00DE009B1091 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2F62C1E00DE009B1091 /* User.swift */; };
 		A912A2FB2C1E058B009B1091 /* AllGameRoomsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2FA2C1E058B009B1091 /* AllGameRoomsView.swift */; };
@@ -63,6 +68,11 @@
 		7D8BF6092C1E7DCC006734FB /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		7D8BF60B2C1E7DE4006734FB /* Chip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chip.swift; sourceTree = "<group>"; };
 		7D8BF60D2C1E9248006734FB /* ChipConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipConstants.swift; sourceTree = "<group>"; };
+		7D8BF6102C20C04E006734FB /* RegistrationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationResult.swift; sourceTree = "<group>"; };
+		7D8BF6122C20C2F5006734FB /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		7D8BF6142C20C479006734FB /* LoginResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResult.swift; sourceTree = "<group>"; };
+		7D8BF6172C20C4F9006734FB /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		7D8BF6192C20C629006734FB /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		A912A2F32C1DE864009B1091 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		A912A2F62C1E00DE009B1091 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A912A2FA2C1E058B009B1091 /* AllGameRoomsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGameRoomsView.swift; sourceTree = "<group>"; };
@@ -150,6 +160,25 @@
 			path = Chips;
 			sourceTree = "<group>";
 		};
+		7D8BF60F2C20C036006734FB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7D8BF6102C20C04E006734FB /* RegistrationResult.swift */,
+				7D8BF6122C20C2F5006734FB /* NetworkError.swift */,
+				7D8BF6142C20C479006734FB /* LoginResult.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7D8BF6162C20C4DF006734FB /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				7D8BF6172C20C4F9006734FB /* AuthView.swift */,
+				7D8BF6192C20C629006734FB /* AuthViewModel.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		A912A2FC2C1F1CDC009B1091 /* AllGameRooms */ = {
 			isa = PBXGroup;
 			children = (
@@ -231,6 +260,7 @@
 		A9FBADC92C19E763001D802F /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				7D8BF60F2C20C036006734FB /* Models */,
 				A9FBADC42C19DEAF001D802F /* NetworkService.swift */,
 				A912A2FF2C1F1FE6009B1091 /* UserDefaultsService.swift */,
 			);
@@ -240,6 +270,7 @@
 		A9FBADCA2C19E79C001D802F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7D8BF6162C20C4DF006734FB /* Auth */,
 				486E90C02C1FD0FC009FF728 /* Move */,
 				486E90BB2C1FC556009FF728 /* ChipsOnHand */,
 				486E90AD2C1F15EC009FF728 /* Wins */,
@@ -360,14 +391,18 @@
 				A9FBADCE2C19F0D9001D802F /* CustomTextViews.swift in Sources */,
 				486E90BA2C1FA83C009FF728 /* CellView.swift in Sources */,
 				7D8BF60A2C1E7DCC006734FB /* Coordinate.swift in Sources */,
+				7D8BF6112C20C04E006734FB /* RegistrationResult.swift in Sources */,
 				A9FBADCC2C19E7B3001D802F /* CreateGameRoomView.swift in Sources */,
+				7D8BF6132C20C2F5006734FB /* NetworkError.swift in Sources */,
 				A9FBADB62C19DD66001D802F /* ScrabbleGameApp.swift in Sources */,
 				A912A2F42C1DE864009B1091 /* Enums.swift in Sources */,
 				486E90A82C1F02EC009FF728 /* ScoreboardViewModel.swift in Sources */,
 				A912A2FE2C1F1CFA009B1091 /* AllGameRoomsViewModel.swift in Sources */,
+				7D8BF6152C20C479006734FB /* LoginResult.swift in Sources */,
 				486E90B12C1F5EFA009FF728 /* LetterInTileCounterView.swift in Sources */,
 				A912A2F72C1E00DE009B1091 /* User.swift in Sources */,
 				A912A2FB2C1E058B009B1091 /* AllGameRoomsView.swift in Sources */,
+				7D8BF6182C20C4F9006734FB /* AuthView.swift in Sources */,
 				486E90B82C1F910A009FF728 /* GameRoomViewModel.swift in Sources */,
 				7D8BF60C2C1E7DE4006734FB /* Chip.swift in Sources */,
 				486E90BD2C1FC579009FF728 /* ChipOnHandViewModel.swift in Sources */,
@@ -377,6 +412,7 @@
 				486E90AA2C1F03B2009FF728 /* ScoreboardModel.swift in Sources */,
 				486E90B32C1F7E79009FF728 /* GameTabBarView.swift in Sources */,
 				7D8BF60E2C1E9248006734FB /* ChipConstants.swift in Sources */,
+				7D8BF61A2C20C629006734FB /* AuthViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
