@@ -15,6 +15,7 @@ struct GameRoomView: View {
         NavigationStack {
             // В зависимости от того админ или нет показывается тот или иной экран
             GameTopBar(gameRoom: $viewModel.gameRoom, leaveRoom: $viewModel.leaveRoom, user: $viewModel.user, movePlayerId: $viewModel.movePlayerId)
+            LetterInTileCounterView(count: $viewModel.countChipsInTile)
             Spacer()
             
             if viewModel.gameRoom.gameStatus.lowercased() == GameStatus.Running.rawValue.lowercased() {

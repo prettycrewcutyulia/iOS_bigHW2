@@ -128,7 +128,6 @@ struct GameTopBar: View {
                 }
                 
                 HStack {
-                    LetterInTileCounterView(count: $gameRoom.currentNumberOfChips)
                     Spacer()
                     Button(action: {
                         showChipsOnHand.toggle()
