@@ -31,7 +31,7 @@ struct AllGameRoomsView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Button("Create new room", systemImage: "plus") {
+                Button("Create new room \(gameRooms.count)", systemImage: "plus") {
                     showCreateGameRoomView.toggle()
                 }
 
