@@ -18,7 +18,7 @@ class NetworkService {
     // TODO: сюда нужно будет передавать api key и header для авторизации
     private let apiKey = "720f8e3a-3649-463f-9bde-d65fc6268da3"
     
-    private let authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI3ODFDMzU2OS1BOEU3LTQ0M0YtQTgzOC0yOTE0MTE3RjlCNzMiLCJleHAiOjE3MTg1NzI2NDQuOTEzMjJ9.5PCSG5JjOjgos09ie7NuAJEFmgm7ui9EgzxNwjPSeJQ"
+    private let authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI3ODFDMzU2OS1BOEU3LTQ0M0YtQTgzOC0yOTE0MTE3RjlCNzMiLCJleHAiOjE3MTg1NzYzOTkuMjEwOTY2fQ.LXekmFMeioZOWf6DGPg6Lrt-JYwa5EiRglNmwkv0MMs"
     
     // MARK: Создание игровой комнаты.
     func createGameRoom(adminNickname: String, roomCode: String?) async throws -> GameRoom {
