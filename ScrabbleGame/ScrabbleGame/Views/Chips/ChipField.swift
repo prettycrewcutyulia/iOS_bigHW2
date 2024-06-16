@@ -11,7 +11,7 @@ import SwiftUI
 
 struct ChipField: View {
     @Binding var chips: [ChipsOnField]
-    @GestureState private var zoom = 0.6
+    @State private var zoom = 0.6
     
     let letters = Array("ABCDEFGHIJKLMNO")
     
@@ -53,6 +53,17 @@ struct ChipField: View {
             }
             .frame(width: gridSize, height: gridSize)
             .scaleEffect(zoom)
+            .gesture(MagnificationGesture() // Добавление жеста масштабирования
+                           .onChanged { value in
+                               zoom = value.magnitude // Изменение масштаба в зависимости от жеста
+                           }
+                           .onEnded { value in
+                               let delta = value.magnitude / zoom
+                               zoom *= delta // Финальное применение масштаба
+                               if zoom < 0.6 {
+                                   zoom = 0.6 // Устанавливаем минимальный масштаб, чтобы избежать слишком маленького размера
+                               }
+                           })
             .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
         }
     }
@@ -60,6 +71,8 @@ struct ChipField: View {
     private func selectChip(at coordinate: Coordinate) {
         if let index = chips.firstIndex(where: { $0.coordinate == coordinate }) {
             chips[index].isSelected.toggle()
+        } else {
+            print("NotFound")
         }
     }
 }
