@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D8BF6052C1E7C87006734FB /* ChipField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6042C1E7C87006734FB /* ChipField.swift */; };
+		7D8BF6072C1E7D75006734FB /* ChipsOnField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6062C1E7D75006734FB /* ChipsOnField.swift */; };
+		7D8BF60A2C1E7DCC006734FB /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6092C1E7DCC006734FB /* Coordinate.swift */; };
+		7D8BF60C2C1E7DE4006734FB /* Chip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF60B2C1E7DE4006734FB /* Chip.swift */; };
+		7D8BF60E2C1E9248006734FB /* ChipConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF60D2C1E9248006734FB /* ChipConstants.swift */; };
 		A912A2F42C1DE864009B1091 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2F32C1DE864009B1091 /* Enums.swift */; };
 		A912A2F72C1E00DE009B1091 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2F62C1E00DE009B1091 /* User.swift */; };
 		A912A2FB2C1E058B009B1091 /* AllGameRoomsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2FA2C1E058B009B1091 /* AllGameRoomsView.swift */; };
@@ -23,6 +28,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7D8BF6042C1E7C87006734FB /* ChipField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipField.swift; sourceTree = "<group>"; };
+		7D8BF6062C1E7D75006734FB /* ChipsOnField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipsOnField.swift; sourceTree = "<group>"; };
+		7D8BF6092C1E7DCC006734FB /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
+		7D8BF60B2C1E7DE4006734FB /* Chip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chip.swift; sourceTree = "<group>"; };
+		7D8BF60D2C1E9248006734FB /* ChipConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipConstants.swift; sourceTree = "<group>"; };
 		A912A2F32C1DE864009B1091 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		A912A2F62C1E00DE009B1091 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A912A2FA2C1E058B009B1091 /* AllGameRoomsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGameRoomsView.swift; sourceTree = "<group>"; };
@@ -51,6 +61,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7D8BF6032C1E7C6F006734FB /* Chips */ = {
+			isa = PBXGroup;
+			children = (
+				7D8BF6042C1E7C87006734FB /* ChipField.swift */,
+			);
+			path = Chips;
+			sourceTree = "<group>";
+		};
+		7D8BF6082C1E7DBA006734FB /* Chips */ = {
+			isa = PBXGroup;
+			children = (
+				7D8BF6062C1E7D75006734FB /* ChipsOnField.swift */,
+				7D8BF6092C1E7DCC006734FB /* Coordinate.swift */,
+				7D8BF60B2C1E7DE4006734FB /* Chip.swift */,
+				7D8BF60D2C1E9248006734FB /* ChipConstants.swift */,
+			);
+			path = Chips;
+			sourceTree = "<group>";
+		};
 		A9FBADA92C19DD66001D802F = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +123,7 @@
 		A9FBADC82C19E74D001D802F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7D8BF6082C1E7DBA006734FB /* Chips */,
 				A9FBADC62C19E2D6001D802F /* GameRoom.swift */,
 				A912A2F62C1E00DE009B1091 /* User.swift */,
 			);
@@ -111,6 +141,7 @@
 		A9FBADCA2C19E79C001D802F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7D8BF6032C1E7C6F006734FB /* Chips */,
 				A9FBADD22C19F598001D802F /* GameRoom */,
 				A9FBADCF2C19F0F4001D802F /* CustomViews */,
 			);
@@ -208,15 +239,20 @@
 			files = (
 				A9FBADC72C19E2D6001D802F /* GameRoom.swift in Sources */,
 				A9FBADB82C19DD66001D802F /* ContentView.swift in Sources */,
+				7D8BF6072C1E7D75006734FB /* ChipsOnField.swift in Sources */,
+				7D8BF6052C1E7C87006734FB /* ChipField.swift in Sources */,
 				A9FBADD12C19F129001D802F /* CustomButtons.swift in Sources */,
 				A9FBADC52C19DEAF001D802F /* NetworkService.swift in Sources */,
 				A9FBADCE2C19F0D9001D802F /* CustomTextViews.swift in Sources */,
+				7D8BF60A2C1E7DCC006734FB /* Coordinate.swift in Sources */,
 				A9FBADCC2C19E7B3001D802F /* CreateGameRoomView.swift in Sources */,
 				A9FBADB62C19DD66001D802F /* ScrabbleGameApp.swift in Sources */,
 				A912A2F42C1DE864009B1091 /* Enums.swift in Sources */,
 				A912A2F72C1E00DE009B1091 /* User.swift in Sources */,
 				A912A2FB2C1E058B009B1091 /* AllGameRoomsView.swift in Sources */,
+				7D8BF60C2C1E7DE4006734FB /* Chip.swift in Sources */,
 				A9FBADD42C19F5B3001D802F /* GameRoomView.swift in Sources */,
+				7D8BF60E2C1E9248006734FB /* ChipConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
