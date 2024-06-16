@@ -282,8 +282,44 @@ class NetworkService {
     
     // MARK: Получение всех ходов в игре
     func getMovesByGameId(roomId: UUID) async throws -> [ChipsOnField]? {
-        return nil
+            let gamersUrl = URL(string: "http://127.0.0.1:8080/gamersIntoRoom/roomId/\(roomId)/gamersIds")!
+            let gamersRequest = URLRequest(url: gamersUrl)
+
+            // Fetch gamer IDs
+            let (gamersData, _) = try await URLSession.shared.data(for: gamersRequest)
+            let gamersIds = try JSONDecoder().decode([UUID].self, from: gamersData)
+            
+            var allMoves: [MoveDTO] = []
+            
+            // Fetch moves for each gamer
+            for gamerId in gamersIds {
+                let movesUrl = URL(string: "http://127.0.0.1:8080/moves/gameId/\(gamerId)")!
+                let movesRequest = URLRequest(url: movesUrl)
+
+                let (movesData, _) = try await URLSession.shared.data(for: movesRequest)
+                let moves = try JSONDecoder().decode([MoveDTO].self, from: movesData)
+                
+                allMoves.append(contentsOf: moves)
+            }
+        
+        return parseChipsOnField(from: allMoves)
     }
+
+    func parseChipsOnField(from moves: [MoveDTO]) -> [ChipsOnField] {
+        var chipsOnFieldArray: [ChipsOnField] = []
+
+        for move in moves {
+            for chipsDTO in move.chips {
+                let coordinate = Coordinate(x: chipsDTO.coordinate.x, y: chipsDTO.coordinate.y)
+                let chip = chipsDTO.chip
+                let chipsOnField = ChipsOnField(id: nil, coordinate: coordinate, chip: chip)
+                chipsOnFieldArray.append(chipsOnField)
+            }
+        }
+
+        return chipsOnFieldArray
+    }
+
 
     // MARK: Чей же ход?
     func whoseMoves(roomId: UUID, moveCount: Int) async throws -> UUID {

@@ -34,10 +34,9 @@ struct ChipField: View {
                                 .border(Color.black, width: 0.3)
                             ForEach(0..<15, id: \.self) { col in
                                 let coordinate = Coordinate(x: String(viewModel.letters[col]), y: row + 1) // Обновляем координаты y
-                                
                                 let chip = viewModel.chips.first { $0.coordinate == coordinate }
                                 Cell(chip: chip, size: size, coordinate: coordinate,
-                                     isSelected: viewModel.selectedCoordinates.contains(coordinate))
+                                     isSelected: viewModel.selectedCoordinates.contains(ChipsOnField(id: nil, coordinate: coordinate)))
                                 .onTapGesture {
                                     print("Выбрали")
                                     viewModel.selectChip(at: coordinate)
@@ -71,9 +70,8 @@ struct ChipField: View {
             }
         }
         .sheet(isPresented: $viewModel.showMoveView) {
-            // Надо раскомментить чуть позже
-//            MoveView(selectedCoordinate: viewModel.selectedCoordinates)
-//             .presentationDetents([.medium])
+            MoveView(selectedCoordinate: viewModel.selectedCoordinates)
+             .presentationDetents([.medium])
         }
     }
 }

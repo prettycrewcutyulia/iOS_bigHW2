@@ -39,7 +39,7 @@ struct MoveView: View {
                             // Проверяем, соответствует ли формат "буква,запятая,число"
                             let pattern = "^[A-Za-z],[0-9]+$"
                             if let flag = inputChip.range(of: pattern, options: .regularExpression) {
-                                inputWord.append(inputChip)
+                                inputWord.append(inputChip.first ?? String.Element(unicodeScalarLiteral: " "))
 
                                 let result =  extractLetterAndNumber(from: inputChip)
                                 selectedCoordinate[index].chip = Chip(alpha: result.letter, point: result.number)

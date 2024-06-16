@@ -52,8 +52,6 @@ class GameRoomViewModel: ObservableObject {
                 }
             }
         }.store(in: &cancellables)
-        // Тут буду получать данные
-        // Чей ход + кол-во фишек в мешке + элементы на карте
         
         NetworkService.shared.startGameRoomViewTimer()
         NetworkService.shared.startGameRoomStatusTimer(roomId: gameRoom.id)

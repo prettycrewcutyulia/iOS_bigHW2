@@ -21,13 +21,14 @@ class WinsViewModel: ObservableObject {
 
     func onAppear() {
         // запрос в сервис
-        scoreboardModels = [ScoreboardModel(player: "ivan", score: 10)]
-        print("Запрос в сервис")
+        Task {
+            do {
+                scoreboardModels = await NetworkService.shared.fetchLeaderboard(forRoomId: UserDefaultsService.shared.getCurrentUserSafe()?.id ?? UUID()) ?? []
+            }
+        }
     }
     
     func onButtonDoneTap() {
-        print("Закрыть этот экран")
-        print("Открыть начальный экран")
         navigateToNextScreen = true
     }
 }

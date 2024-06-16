@@ -11,7 +11,7 @@ import SwiftUI
 class ChipsFieldViewModel: ObservableObject {
     @Binding var chips: [ChipsOnField]
     @Published var zoom: CGFloat = 0.6
-    @Published var selectedCoordinates: [Coordinate] = []
+    @Published var selectedCoordinates: [ChipsOnField] = []
     @Binding var disabled: Bool
     @Published var showMoveView = false
     var buttonColor: Color {
@@ -26,10 +26,10 @@ class ChipsFieldViewModel: ObservableObject {
     }
     
     func selectChip(at coordinate: Coordinate) {
-        if let index = selectedCoordinates.firstIndex(of: coordinate) {
+        if let index = selectedCoordinates.firstIndex(of: ChipsOnField(id: UUID(), coordinate: coordinate, chip: nil)) {
             selectedCoordinates.remove(at: index)  // Используем remove(at:) для удаления элемента по индексу
         } else {
-            selectedCoordinates.append(coordinate)
+            selectedCoordinates.append(ChipsOnField(id: UUID(), coordinate: coordinate, chip: nil))
         }
     }
 }
