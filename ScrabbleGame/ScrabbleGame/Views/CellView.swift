@@ -24,7 +24,7 @@ struct Cell: View {
                 .frame(width: size, height: size)
                 .border(borderColor, width: borderWidth)
             if let chip = chip {
-                Text(chip.chip.alpha)
+                Text(chip.chip?.alpha ?? "")
             } else {
                 Text(text(for: bonus))
                     .font(.caption)

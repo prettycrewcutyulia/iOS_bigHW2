@@ -10,7 +10,12 @@ import Combine
 
 class NetworkService {
     static let shared = NetworkService();
+
     let getRoomStatusEvent = PassthroughSubject<String, Never>()
+    let getMoveEvent = PassthroughSubject<UUID, Never>()
+    let getCountChipsInTileEvent = PassthroughSubject<Int, Never>()
+    let getChipsOnFieldEvent = PassthroughSubject<[ChipsOnField], Never>()
+
     private init() {}
     
     private let localhost = "http://127.0.0.1:8080"
@@ -310,6 +315,10 @@ class NetworkService {
    }
     
     @objc private func sendRequest() {
+        
+        self.getMoveEvent.send(UUID())
+        self.getCountChipsInTileEvent.send(0)
+        self.getChipsOnFieldEvent.send([])
         print("Сработало(но тут будет запрос)")
     }
     

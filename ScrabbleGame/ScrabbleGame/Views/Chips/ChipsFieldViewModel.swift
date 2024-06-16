@@ -14,6 +14,9 @@ class ChipsFieldViewModel: ObservableObject {
     @Published var selectedCoordinates: [Coordinate] = []
     @Binding var disabled: Bool
     @Published var showMoveView = false
+    var buttonColor: Color {
+        disabled ? .gray : .black
+    }
     
     let letters = Array("ABCDEFGHIJKLMNO")
     

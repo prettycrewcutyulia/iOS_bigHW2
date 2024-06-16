@@ -11,7 +11,7 @@ import Foundation
 struct ChipsOnField: Identifiable, Codable {
     let id: UUID?
     var coordinate: Coordinate
-    var chip: Chip
+    var chip: Chip?
 }
 
 

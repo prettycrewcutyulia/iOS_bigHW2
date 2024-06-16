@@ -17,6 +17,9 @@ class GameRoomViewModel: ObservableObject {
     @Published var leaveRoom: Bool = false
     @Published var user = UserDefaultsService.shared.currentUser
     @Published var movePlayerId: UUID = UUID()
+    @Published var countChipsInTile: Int = 0
+    @Published var chipsOnField: [ChipsOnField] = []
+    @Published var disabledMove: Bool = false
     
     @Published var gameRoom: GameRoom
     
@@ -25,9 +28,21 @@ class GameRoomViewModel: ObservableObject {
     
     init(gameRoom: GameRoom) {
         self.gameRoom = gameRoom
+
+        NetworkService.shared.getMoveEvent.sink{ [weak self] id in
+            self?.movePlayerId = id
+            if self?.movePlayerId == self?.user.id {
+                self?.disabledMove = true
+            }
+        }.store(in: &cancellables)
         
-        NetworkService.shared.startGameRoomViewTimer()
-        NetworkService.shared.startGameRoomStatusTimer(roomId: gameRoom.id)
+        NetworkService.shared.getCountChipsInTileEvent.sink{ [weak self] count in
+            self?.countChipsInTile = count
+        }.store(in: &cancellables)
+        
+        NetworkService.shared.getChipsOnFieldEvent.sink{ [weak self] chips in
+            self?.chipsOnField = chips
+        }.store(in: &cancellables)
         
         NetworkService.shared.getRoomStatusEvent.sink{ [weak self] status in
             DispatchQueue.main.async {
@@ -39,6 +54,9 @@ class GameRoomViewModel: ObservableObject {
         }.store(in: &cancellables)
         // Тут буду получать данные
         // Чей ход + кол-во фишек в мешке + элементы на карте
+        
+        NetworkService.shared.startGameRoomViewTimer()
+        NetworkService.shared.startGameRoomStatusTimer(roomId: gameRoom.id)
     }
     
     // MARK: Смена статуса игры.

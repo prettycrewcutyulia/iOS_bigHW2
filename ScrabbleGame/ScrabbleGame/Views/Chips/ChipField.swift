@@ -71,19 +71,9 @@ struct ChipField: View {
             }
         }
         .sheet(isPresented: $viewModel.showMoveView) {
-            MoveView(selectedCoordinate: viewModel.selectedCoordinates)
-                .presentationDetents([.medium])
+            // Надо раскомментить чуть позже
+//            MoveView(selectedCoordinate: viewModel.selectedCoordinates)
+//             .presentationDetents([.medium])
         }
     }
 }
-
-//struct ChipField_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ChipField(chips: .constant([
-//            ChipsOnField(id: UUID(), coordinate: Coordinate(x: "H", y: 8), chip: Chip(alpha: "A", point: 1)),
-//            ChipsOnField(id: UUID(), coordinate: Coordinate(x: "I", y: 8), chip: Chip(alpha: "B", point: 3))
-//        ]))
-//        .previewLayout(.sizeThatFits)
-//        .padding()
-//    }
-//}
