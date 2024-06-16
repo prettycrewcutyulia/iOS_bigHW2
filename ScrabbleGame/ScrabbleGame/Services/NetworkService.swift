@@ -20,6 +20,8 @@ class NetworkService {
     
     private let authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI3ODFDMzU2OS1BOEU3LTQ0M0YtQTgzOC0yOTE0MTE3RjlCNzMiLCJleHAiOjE3MTg1NzYzOTkuMjEwOTY2fQ.LXekmFMeioZOWf6DGPg6Lrt-JYwa5EiRglNmwkv0MMs"
     
+    private var timerGameRoomView: Timer?
+    
     // MARK: Создание игровой комнаты.
     func createGameRoom(adminNickname: String, roomCode: String?) async throws -> GameRoom {
         let dto = GameRoomDTO(adminNickname: adminNickname, roomCode: roomCode, gameStatus: GameStatus.NotStarted.rawValue, currentNumberOfChips: 40)
@@ -227,6 +229,52 @@ class NetworkService {
         // Запускаем задачу
         task.resume()
         completion(.success(()))
+    }
+    
+    func fetchLeaderboard(forRoomId roomId: UUID) async -> [ScoreboardModel]? {
+        
+        guard let url = URL(string: "\(localhost)/gameRooms/\(roomId)/getLeaderBoard") else {
+            return nil
+        }
+        print(url)
+        var request = URLRequest(url: url)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "GET"
+        
+        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
+        request.addValue(authorization, forHTTPHeaderField: "Authorization")
+        do {
+            let scoreResponce = try await URLSession.shared.data(for: request)
+            let gamersData = scoreResponce.0
+            
+            let decoder = JSONDecoder()
+            
+            let gamers = try decoder.decode([ScoreboardModel].self, from: gamersData)
+            return gamers
+        }
+        catch {
+            return nil
+        }
+    }
+    
+    // Метод для старта таймера
+       func startGameRoomViewTimer() {
+           // Настройка таймера для вызова метода sendRequest каждые 30 секунд
+           timerGameRoomView = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(sendRequest), userInfo: nil, repeats: true)
+           
+           // Немедленный первый запрос
+           sendRequest()
+       }
+       
+       // Метод для остановки таймера
+       func stopGameRoomViewTimer() {
+           timerGameRoomView?.invalidate()
+           timerGameRoomView = nil
+           print("Сработало(таймер выключился)")
+       }
+    
+    @objc private func sendRequest() {
+        print("Сработало(но тут будет запрос)")
     }
     
     // MARK: - Private functions

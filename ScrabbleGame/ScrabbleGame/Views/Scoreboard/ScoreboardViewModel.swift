@@ -11,15 +11,21 @@ import SwiftUI
 class ScoreboardViewModel: ObservableObject {
     @Published var scoreboardModels: [ScoreboardModel] = []
     @Binding var isPresented: Bool
+    let roomUUID: UUID
     
-    init(isPresented: Binding<Bool>) {
+    init(isPresented: Binding<Bool>, roomId: UUID) {
         self._isPresented = isPresented
+        roomUUID = roomId
     }
     
     func onAppear() {
-        // запрос в сервис
-        scoreboardModels = [ScoreboardModel(player: "ivan", score: 10)]
+        Task {
+            if let scoreboardRequest = await NetworkService.shared.fetchLeaderboard(forRoomId: roomUUID) {
+                scoreboardModels = scoreboardRequest
+            }
+        }
         print("Запрос в сервис")
+        
     }
     
     func onButtonDoneTap() {

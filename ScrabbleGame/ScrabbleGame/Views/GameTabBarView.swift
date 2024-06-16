@@ -10,13 +10,15 @@ import SwiftUI
 struct GameTopBar: View {
     @Binding var gameRoom: GameRoom
     @Binding var leaveRoom: Bool
-    @Binding var chipsOnHand: [Chip]
     
     @Binding var user: User
     @State var showErrorAlert: Bool = false
     @State var errorMessage: String = ""
     @State var showAdminSettingsView: Bool = false
     @State var showChipsOnHand = false
+    @State var showLeaderBoard = false
+    
+    @Binding var movePlayerId: UUID
 
     var body: some View {
         NavigationStack {
@@ -36,6 +38,16 @@ struct GameTopBar: View {
                                 Text("you")
                             } else {
                                 Text("\(gameRoom.adminNickname)")
+                            }
+                        }
+                        
+                        HStack {
+                            Text("Move:")
+                                .bold()
+                            if (movePlayerId == user.id) {
+                                Text("you")
+                            } else {
+                                Text("not you")
                             }
                         }
                     }
@@ -59,6 +71,7 @@ struct GameTopBar: View {
                                 print("error")
                             }
                         }
+                        NetworkService.shared.stopGameRoomViewTimer()
                     } label: {
                         Image(systemName: "arrowshape.turn.up.right")
                             .foregroundStyle(.black)
@@ -98,6 +111,14 @@ struct GameTopBar: View {
                                 .foregroundStyle(.black)
                         }
                     }
+                    
+                    Button(action: {
+                        showLeaderBoard.toggle()
+                    }, label: {
+                        Image(systemName: "star")
+                    .padding()
+                    .foregroundColor(.black)
+                    })
                 }
                 
                 HStack {
@@ -126,7 +147,11 @@ struct GameTopBar: View {
             AdminSettingsView(roomId: $gameRoom.id)
         }
         .sheet(isPresented: $showChipsOnHand) {
-            ChipsOnHand(chipsOnHand: $chipsOnHand)
+            ChipsOnHand()
+        }
+        .sheet(isPresented: $showLeaderBoard) {
+            let viewModel = ScoreboardViewModel(isPresented: $showLeaderBoard, roomId: gameRoom.id)
+            ScoreboardView(viewModel: viewModel)
         }
         .alert(isPresented: $showErrorAlert, content: {
             return Alert(title: Text(errorMessage), dismissButton: .default(Text("Ok")))
@@ -138,8 +163,8 @@ struct GameTopBar_Previews: PreviewProvider {
     static var previews: some View {
         GameTopBar(
             gameRoom: .constant(GameRoom(id: UUID(), adminNickname: "adminUser", roomCode: nil, gameStatus: GameStatus.NotStarted.rawValue, currentNumberOfChips: 100)),
-            leaveRoom: .constant(false), chipsOnHand: Binding<[Chip]>.constant([]),
-            user: .constant(User(id: UUID(), nickName: "NICK"))
+            leaveRoom: .constant(false),
+            user: .constant(User(id: UUID(), nickName: "NICK")), movePlayerId: Binding<UUID>.constant(UUID())
         )
     }
 }

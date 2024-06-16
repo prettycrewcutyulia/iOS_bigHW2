@@ -14,11 +14,13 @@ struct GameRoomView: View {
     var body: some View {
         NavigationStack {
             // TODO: В зависимости от того админ или нет показывать тот или иной экран
-            GameTopBar(gameRoom: $viewModel.gameRoom, leaveRoom: $viewModel.leaveRoom, chipsOnHand: $viewModel.chipsOnHand, user: $viewModel.user)
+            GameTopBar(gameRoom: $viewModel.gameRoom, leaveRoom: $viewModel.leaveRoom, user: $viewModel.user, movePlayerId: $viewModel.movePlayerId)
             Spacer()
             
             if viewModel.gameRoom.gameStatus.lowercased() == GameStatus.Running.rawValue.lowercased() {
-                ChipField(chips: Binding<[ChipsOnField]>.constant([]))
+                let viewModelChipsField = ChipsFieldViewModel(chips: Binding<[ChipsOnField]>.constant([]), disabled: Binding<Bool>.constant(viewModel.movePlayerId != $viewModel.user.id))
+                ChipField(viewModel: viewModelChipsField)
+                    .disabled(viewModel.movePlayerId != $viewModel.user.id)
             }
             
             // Кнопка старата/паузы игры доступна только админу

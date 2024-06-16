@@ -14,13 +14,18 @@ class GameRoomViewModel: ObservableObject {
     @Published var buttonColor: Color = .black
     @Published var showErrorAlert: Bool = false
     @Published var leaveRoom: Bool = false
-    @Published var user = AuthService.shared.currentUser
+    @Published var user = UserDefaultsService.shared.currentUser
+    @Published var movePlayerId: UUID = UUID()
     
-    @Published var chipsOnHand: [Chip] = []
     @Published var gameRoom: GameRoom
     
     init(gameRoom: GameRoom) {
         self.gameRoom = gameRoom
+        
+        NetworkService.shared.startGameRoomViewTimer()
+        
+        // Тут буду получать данные
+        // Чей ход + кол-во фишек в мешке + элементы на карте
     }
     
     // MARK: Смена статуса игры.
@@ -33,9 +38,11 @@ class GameRoomViewModel: ObservableObject {
                     self.gameRoom = try await NetworkService.shared.changeGameStatus(gameStatus: .Running, roomId: gameRoom.id)
                 }
                 catch {
-                    self.buttonText = GameButtonText.StartGame.rawValue
-                    self.buttonColor = .black
-                    self.showErrorAlert.toggle()
+                    DispatchQueue.main.async {
+                        self.buttonText = GameButtonText.StartGame.rawValue
+                        self.buttonColor = .black
+                        self.showErrorAlert.toggle()
+                    }
                 }
             }
         } else {
@@ -46,9 +53,11 @@ class GameRoomViewModel: ObservableObject {
                     self.gameRoom = try await NetworkService.shared.changeGameStatus(gameStatus: .Pause, roomId: gameRoom.id)
                 }
                 catch {
-                    self.buttonText = GameButtonText.PauseGame.rawValue
-                    self.buttonColor = .gray
-                    self.showErrorAlert.toggle()
+                    DispatchQueue.main.async {
+                        self.buttonText = GameButtonText.PauseGame.rawValue
+                        self.buttonColor = .gray
+                        self.showErrorAlert.toggle()
+                    }
                 }
             }
         }

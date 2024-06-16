@@ -16,6 +16,9 @@
 		486E90B32C1F7E79009FF728 /* GameTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90B22C1F7E79009FF728 /* GameTabBarView.swift */; };
 		486E90B52C1F86A7009FF728 /* ChipsOnHand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90B42C1F86A7009FF728 /* ChipsOnHand.swift */; };
 		486E90B82C1F910A009FF728 /* GameRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90B72C1F910A009FF728 /* GameRoomViewModel.swift */; };
+		486E90BA2C1FA83C009FF728 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90B92C1FA83C009FF728 /* CellView.swift */; };
+		486E90BD2C1FC579009FF728 /* ChipOnHandViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90BC2C1FC579009FF728 /* ChipOnHandViewModel.swift */; };
+		486E90BF2C1FD0FC009FF728 /* ChipsFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90BE2C1FD0FC009FF728 /* ChipsFieldViewModel.swift */; };
 		7D8BF6052C1E7C87006734FB /* ChipField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6042C1E7C87006734FB /* ChipField.swift */; };
 		7D8BF6072C1E7D75006734FB /* ChipsOnField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6062C1E7D75006734FB /* ChipsOnField.swift */; };
 		7D8BF60A2C1E7DCC006734FB /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6092C1E7DCC006734FB /* Coordinate.swift */; };
@@ -25,7 +28,7 @@
 		A912A2F72C1E00DE009B1091 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2F62C1E00DE009B1091 /* User.swift */; };
 		A912A2FB2C1E058B009B1091 /* AllGameRoomsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2FA2C1E058B009B1091 /* AllGameRoomsView.swift */; };
 		A912A2FE2C1F1CFA009B1091 /* AllGameRoomsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2FD2C1F1CFA009B1091 /* AllGameRoomsViewModel.swift */; };
-		A912A3002C1F1FE6009B1091 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2FF2C1F1FE6009B1091 /* AuthService.swift */; };
+		A912A3002C1F1FE6009B1091 /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A2FF2C1F1FE6009B1091 /* UserDefaultsService.swift */; };
 		A912A3022C1F53A8009B1091 /* AdminSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A912A3012C1F53A8009B1091 /* AdminSettingsView.swift */; };
 		A9FBADB62C19DD66001D802F /* ScrabbleGameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FBADB52C19DD66001D802F /* ScrabbleGameApp.swift */; };
 		A9FBADB82C19DD66001D802F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FBADB72C19DD66001D802F /* ContentView.swift */; };
@@ -49,6 +52,9 @@
 		486E90B22C1F7E79009FF728 /* GameTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTabBarView.swift; sourceTree = "<group>"; };
 		486E90B42C1F86A7009FF728 /* ChipsOnHand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipsOnHand.swift; sourceTree = "<group>"; };
 		486E90B72C1F910A009FF728 /* GameRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRoomViewModel.swift; sourceTree = "<group>"; };
+		486E90B92C1FA83C009FF728 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
+		486E90BC2C1FC579009FF728 /* ChipOnHandViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipOnHandViewModel.swift; sourceTree = "<group>"; };
+		486E90BE2C1FD0FC009FF728 /* ChipsFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipsFieldViewModel.swift; sourceTree = "<group>"; };
 		7D8BF6042C1E7C87006734FB /* ChipField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipField.swift; sourceTree = "<group>"; };
 		7D8BF6062C1E7D75006734FB /* ChipsOnField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipsOnField.swift; sourceTree = "<group>"; };
 		7D8BF6092C1E7DCC006734FB /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
@@ -58,7 +64,7 @@
 		A912A2F62C1E00DE009B1091 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A912A2FA2C1E058B009B1091 /* AllGameRoomsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGameRoomsView.swift; sourceTree = "<group>"; };
 		A912A2FD2C1F1CFA009B1091 /* AllGameRoomsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGameRoomsViewModel.swift; sourceTree = "<group>"; };
-		A912A2FF2C1F1FE6009B1091 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		A912A2FF2C1F1FE6009B1091 /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
 		A912A3012C1F53A8009B1091 /* AdminSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminSettingsView.swift; sourceTree = "<group>"; };
 		A9FBADB22C19DD66001D802F /* ScrabbleGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrabbleGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9FBADB52C19DD66001D802F /* ScrabbleGameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrabbleGameApp.swift; sourceTree = "<group>"; };
@@ -103,17 +109,20 @@
 			path = Wins;
 			sourceTree = "<group>";
 		};
-		486E90B62C1F90E7009FF728 /* New Group */ = {
+		486E90BB2C1FC556009FF728 /* ChipsOnHand */ = {
 			isa = PBXGroup;
 			children = (
+				486E90B42C1F86A7009FF728 /* ChipsOnHand.swift */,
+				486E90BC2C1FC579009FF728 /* ChipOnHandViewModel.swift */,
 			);
-			path = "New Group";
+			path = ChipsOnHand;
 			sourceTree = "<group>";
 		};
 		7D8BF6032C1E7C6F006734FB /* Chips */ = {
 			isa = PBXGroup;
 			children = (
 				7D8BF6042C1E7C87006734FB /* ChipField.swift */,
+				486E90BE2C1FD0FC009FF728 /* ChipsFieldViewModel.swift */,
 			);
 			path = Chips;
 			sourceTree = "<group>";
@@ -193,7 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				A9FBADC42C19DEAF001D802F /* NetworkService.swift */,
-				A912A2FF2C1F1FE6009B1091 /* AuthService.swift */,
+				A912A2FF2C1F1FE6009B1091 /* UserDefaultsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -201,7 +210,7 @@
 		A9FBADCA2C19E79C001D802F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				486E90B62C1F90E7009FF728 /* New Group */,
+				486E90BB2C1FC556009FF728 /* ChipsOnHand */,
 				486E90AD2C1F15EC009FF728 /* Wins */,
 				486E90A62C1F02D9009FF728 /* Scoreboard */,
 				7D8BF6032C1E7C6F006734FB /* Chips */,
@@ -209,7 +218,7 @@
 				A9FBADCF2C19F0F4001D802F /* CustomViews */,
 				486E90B02C1F5EFA009FF728 /* LetterInTileCounterView.swift */,
 				486E90B22C1F7E79009FF728 /* GameTabBarView.swift */,
-				486E90B42C1F86A7009FF728 /* ChipsOnHand.swift */,
+				486E90B92C1FA83C009FF728 /* CellView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -306,6 +315,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9FBADC72C19E2D6001D802F /* GameRoom.swift in Sources */,
+				486E90BF2C1FD0FC009FF728 /* ChipsFieldViewModel.swift in Sources */,
 				A912A3022C1F53A8009B1091 /* AdminSettingsView.swift in Sources */,
 				A9FBADB82C19DD66001D802F /* ContentView.swift in Sources */,
 				486E90B52C1F86A7009FF728 /* ChipsOnHand.swift in Sources */,
@@ -314,9 +324,10 @@
 				486E90A52C1F02D5009FF728 /* ScoreboardView.swift in Sources */,
 				486E90AF2C1F15FB009FF728 /* WinsViewModel.swift in Sources */,
 				A9FBADD12C19F129001D802F /* CustomButtons.swift in Sources */,
-				A912A3002C1F1FE6009B1091 /* AuthService.swift in Sources */,
+				A912A3002C1F1FE6009B1091 /* UserDefaultsService.swift in Sources */,
 				A9FBADC52C19DEAF001D802F /* NetworkService.swift in Sources */,
 				A9FBADCE2C19F0D9001D802F /* CustomTextViews.swift in Sources */,
+				486E90BA2C1FA83C009FF728 /* CellView.swift in Sources */,
 				7D8BF60A2C1E7DCC006734FB /* Coordinate.swift in Sources */,
 				A9FBADCC2C19E7B3001D802F /* CreateGameRoomView.swift in Sources */,
 				A9FBADB62C19DD66001D802F /* ScrabbleGameApp.swift in Sources */,
@@ -328,6 +339,7 @@
 				A912A2FB2C1E058B009B1091 /* AllGameRoomsView.swift in Sources */,
 				486E90B82C1F910A009FF728 /* GameRoomViewModel.swift in Sources */,
 				7D8BF60C2C1E7DE4006734FB /* Chip.swift in Sources */,
+				486E90BD2C1FC579009FF728 /* ChipOnHandViewModel.swift in Sources */,
 				A9FBADD42C19F5B3001D802F /* GameRoomView.swift in Sources */,
 				486E90AC2C1F1302009FF728 /* WinsView.swift in Sources */,
 				486E90AA2C1F03B2009FF728 /* ScoreboardModel.swift in Sources */,
@@ -462,6 +474,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScrabbleGame/Preview Content\"";
+				DEVELOPMENT_TEAM = 7Q94L4HLT8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -498,6 +511,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScrabbleGame/Preview Content\"";
+				DEVELOPMENT_TEAM = 7Q94L4HLT8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;

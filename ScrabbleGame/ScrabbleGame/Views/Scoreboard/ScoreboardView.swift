@@ -12,19 +12,23 @@ struct ScoreboardView: View {
 
     var body: some View {
         VStack(alignment: .center) {
-                    Text("Scoreboard")
-                        .font(.title)
+            Text("Scoreboard")
+                .font(.title)
             
             ScoreboardViewList(scoreboardModels: viewModel.scoreboardModels)
-            CustomButton(buttonText:  Binding<String>.constant("Done"), buttonColor: Binding<Color>.constant(.black), isDisabled: false) {
+            CustomButton(
+                buttonText:  Binding<String>.constant("Done"),
+                buttonColor: Binding<Color>.constant(.black),
+                isDisabled: false
+            ) {
                 viewModel.onButtonDoneTap()
             }
-                }
-                .listStyle(PlainListStyle())
-                .padding()
-                .onAppear {
-                    viewModel.onAppear()
-                }
+        }
+        .listStyle(PlainListStyle())
+        .padding()
+        .onAppear {
+            viewModel.onAppear()
+        }
     }
 }
 

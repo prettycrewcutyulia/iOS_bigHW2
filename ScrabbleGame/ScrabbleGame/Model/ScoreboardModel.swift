@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ScoreboardModel: Comparable, CustomStringConvertible {
+struct ScoreboardModel: Comparable, CustomStringConvertible, Decodable {
     
     let player: String?
     let score: Int
