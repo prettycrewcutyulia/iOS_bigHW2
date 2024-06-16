@@ -108,13 +108,14 @@ struct GameTopBar: View {
                     }
                     .padding()
                     Spacer()
-                    HStack {
-                        Text("\(gameRoom.currentNumberOfChips)")
-                            .foregroundStyle(gameRoom.currentNumberOfChips == 0 ? .red : .green)
-                        Image(systemName: "dollarsign.circle")
-                            .foregroundStyle(.yellow)
-                        
-                    }
+//                    HStack {
+//                        Text("\(gameRoom.currentNumberOfChips)")
+//                            .foregroundStyle(gameRoom.currentNumberOfChips == 0 ? .red : .green)
+//                        Image(systemName: "dollarsign.circle")
+//                            .foregroundStyle(.yellow)
+//                        
+//                    }
+                    LetterInTileCounterView(count: $gameRoom.currentNumberOfChips)
                     Spacer()
                     Button {
                         // leave room

@@ -10,16 +10,16 @@ import SwiftUI
 struct LetterInTileCounterView: View {
     @Binding var count: Int
     var body: some View {
-        VStack {
+        HStack {
             Text("Letter in tiles:")
-                .font(.footnote)
+                .font(.caption)
             ZStack {
                 RoundedRectangle(cornerRadius: 25)
                     .fill(Color.gray)
                 Text("\(count)")
                     .foregroundStyle(Color.white)
             }
-            .frame(width: 50, height: 50)
+            .frame(width: 40, height: 40)
         }
     }
 }
