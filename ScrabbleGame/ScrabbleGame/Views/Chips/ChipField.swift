@@ -64,11 +64,15 @@ struct ChipField: View {
                     })
                 .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
                 .defaultScrollAnchor(.center)
-                
+
                 CustomButton(buttonText: Binding<String>.constant("Move"), buttonColor: Binding<Color>.constant(.black), isDisabled: viewModel.disabled) {
-                    // Тут будет открываться новый экран для ввода хода)
+                    viewModel.showMoveView.toggle()
                 }
             }
+        }
+        .sheet(isPresented: $viewModel.showMoveView) {
+            MoveView(selectedCoordinate: viewModel.selectedCoordinates)
+                .presentationDetents([.medium])
         }
     }
 }

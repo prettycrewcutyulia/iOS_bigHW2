@@ -19,6 +19,7 @@
 		486E90BA2C1FA83C009FF728 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90B92C1FA83C009FF728 /* CellView.swift */; };
 		486E90BD2C1FC579009FF728 /* ChipOnHandViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90BC2C1FC579009FF728 /* ChipOnHandViewModel.swift */; };
 		486E90BF2C1FD0FC009FF728 /* ChipsFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90BE2C1FD0FC009FF728 /* ChipsFieldViewModel.swift */; };
+		486E90C22C1FD0FC009FF728 /* MoveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90C12C1FD0FC009FF728 /* MoveView.swift */; };
 		7D8BF6052C1E7C87006734FB /* ChipField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6042C1E7C87006734FB /* ChipField.swift */; };
 		7D8BF6072C1E7D75006734FB /* ChipsOnField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6062C1E7D75006734FB /* ChipsOnField.swift */; };
 		7D8BF60A2C1E7DCC006734FB /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6092C1E7DCC006734FB /* Coordinate.swift */; };
@@ -55,6 +56,7 @@
 		486E90B92C1FA83C009FF728 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		486E90BC2C1FC579009FF728 /* ChipOnHandViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipOnHandViewModel.swift; sourceTree = "<group>"; };
 		486E90BE2C1FD0FC009FF728 /* ChipsFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipsFieldViewModel.swift; sourceTree = "<group>"; };
+		486E90C12C1FD0FC009FF728 /* MoveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveView.swift; sourceTree = "<group>"; };
 		7D8BF6042C1E7C87006734FB /* ChipField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipField.swift; sourceTree = "<group>"; };
 		7D8BF6062C1E7D75006734FB /* ChipsOnField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipsOnField.swift; sourceTree = "<group>"; };
 		7D8BF6092C1E7DCC006734FB /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
@@ -116,6 +118,14 @@
 				486E90BC2C1FC579009FF728 /* ChipOnHandViewModel.swift */,
 			);
 			path = ChipsOnHand;
+			sourceTree = "<group>";
+		};
+		486E90C02C1FD0FC009FF728 /* Move */ = {
+			isa = PBXGroup;
+			children = (
+				486E90C12C1FD0FC009FF728 /* MoveView.swift */,
+			);
+			path = Move;
 			sourceTree = "<group>";
 		};
 		7D8BF6032C1E7C6F006734FB /* Chips */ = {
@@ -210,6 +220,7 @@
 		A9FBADCA2C19E79C001D802F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				486E90C02C1FD0FC009FF728 /* Move */,
 				486E90BB2C1FC556009FF728 /* ChipsOnHand */,
 				486E90AD2C1F15EC009FF728 /* Wins */,
 				486E90A62C1F02D9009FF728 /* Scoreboard */,
@@ -341,6 +352,7 @@
 				7D8BF60C2C1E7DE4006734FB /* Chip.swift in Sources */,
 				486E90BD2C1FC579009FF728 /* ChipOnHandViewModel.swift in Sources */,
 				A9FBADD42C19F5B3001D802F /* GameRoomView.swift in Sources */,
+				486E90C22C1FD0FC009FF728 /* MoveView.swift in Sources */,
 				486E90AC2C1F1302009FF728 /* WinsView.swift in Sources */,
 				486E90AA2C1F03B2009FF728 /* ScoreboardModel.swift in Sources */,
 				486E90B32C1F7E79009FF728 /* GameTabBarView.swift in Sources */,

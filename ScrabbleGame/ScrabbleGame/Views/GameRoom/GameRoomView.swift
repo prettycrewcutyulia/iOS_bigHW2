@@ -18,9 +18,9 @@ struct GameRoomView: View {
             Spacer()
             
             if viewModel.gameRoom.gameStatus.lowercased() == GameStatus.Running.rawValue.lowercased() {
-                let viewModelChipsField = ChipsFieldViewModel(chips: Binding<[ChipsOnField]>.constant([]), disabled: Binding<Bool>.constant(viewModel.movePlayerId != $viewModel.user.id))
+                let viewModelChipsField = ChipsFieldViewModel(chips: Binding<[ChipsOnField]>.constant([]), disabled: Binding<Bool>.constant(false))
                 ChipField(viewModel: viewModelChipsField)
-                    .disabled(viewModel.movePlayerId != $viewModel.user.id)
+                    .disabled(false)
             }
             
             // Кнопка старата/паузы игры доступна только админу
