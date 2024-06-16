@@ -18,7 +18,7 @@ struct GameTopBar: View {
 
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading) {
+            VStack(alignment: .center) {
                 HStack {
                     VStack(alignment: .leading) {
                         HStack {
@@ -37,10 +37,8 @@ struct GameTopBar: View {
                             }
                         }
                     }
-                    .padding()
                     Spacer()
-                    LetterInTileCounterView(count: $gameRoom.currentNumberOfChips)
-                    Spacer()
+
                     Button {
                         // leave room
                         Task {
@@ -74,10 +72,10 @@ struct GameTopBar: View {
                                 .foregroundStyle(.black)
                         }
                     }
-                    Spacer()
-                    
                 }
-            }
+                
+                LetterInTileCounterView(count: $gameRoom.currentNumberOfChips)
+            }.padding()
         }
         .fullScreenCover(isPresented: $leaveRoom) {
             // Переход на другой экран всех комнат
@@ -91,5 +89,15 @@ struct GameTopBar: View {
         .alert(isPresented: $showErrorAlert, content: {
             return Alert(title: Text(errorMessage), dismissButton: .default(Text("Ok")))
         })
+    }
+}
+
+struct GameTopBar_Previews: PreviewProvider {
+    static var previews: some View {
+        GameTopBar(
+            gameRoom: .constant(GameRoom(id: UUID(), adminNickname: "adminUser", roomCode: nil, gameStatus: GameStatus.NotStarted.rawValue, currentNumberOfChips: 100)),
+            leaveRoom: .constant(false),
+            user: .constant(User(id: UUID(), nickName: "NICK"))
+        )
     }
 }

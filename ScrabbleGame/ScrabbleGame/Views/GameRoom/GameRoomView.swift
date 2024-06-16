@@ -14,7 +14,7 @@ struct GameRoomView: View {
     @State var leaveRoom: Bool = false
     
     @State var buttonText: String = ""
-    @State var buttonColor: Color = .green
+    @State var buttonColor: Color = .black
     @State var showErrorAlert: Bool = false
 
 
@@ -58,17 +58,21 @@ struct GameRoomView: View {
                     gameRoom = try await NetworkService.shared.changeGameStatus(gameStatus: .Running, roomId: gameRoom.id)
                 }
                 catch {
+                    self.buttonText = GameButtonText.StartGame.rawValue
+                    self.buttonColor = .black
                     showErrorAlert.toggle()
                 }
             }
         } else {
             self.buttonText = GameButtonText.StartGame.rawValue
-            self.buttonColor = .green
+            self.buttonColor = .black
             Task {
                 do {
                     gameRoom = try await NetworkService.shared.changeGameStatus(gameStatus: .Pause, roomId: gameRoom.id)
                 }
                 catch {
+                    self.buttonText = GameButtonText.PauseGame.rawValue
+                    self.buttonColor = .gray
                     showErrorAlert.toggle()
                 }
             }
