@@ -50,6 +50,7 @@ struct ChipField: View {
                         }
                     }
                 }
+                .offset(x: -(gridSize/2), y: -(gridSize/2))
                 .scaleEffect(zoom)
             }
             .frame(maxWidth: .infinity, maxHeight: gridSize)
