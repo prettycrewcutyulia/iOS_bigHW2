@@ -21,6 +21,8 @@
 		486E90BF2C1FD0FC009FF728 /* ChipsFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90BE2C1FD0FC009FF728 /* ChipsFieldViewModel.swift */; };
 		486E90C22C1FD0FC009FF728 /* MoveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90C12C1FD0FC009FF728 /* MoveView.swift */; };
 		48ABA9DE2C2103280067AFF4 /* ScrabbleGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ABA9DD2C2103280067AFF4 /* ScrabbleGameTests.swift */; };
+		48ABA9E62C2103280067AFF4 /* ChipsOnFieldDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ABA9E52C2103280067AFF4 /* ChipsOnFieldDTO.swift */; };
+		48ABA9E82C2103280067AFF4 /* MoveDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ABA9E72C2103280067AFF4 /* MoveDTO.swift */; };
 		7D8BF6052C1E7C87006734FB /* ChipField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6042C1E7C87006734FB /* ChipField.swift */; };
 		7D8BF6072C1E7D75006734FB /* ChipsOnField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6062C1E7D75006734FB /* ChipsOnField.swift */; };
 		7D8BF60A2C1E7DCC006734FB /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6092C1E7DCC006734FB /* Coordinate.swift */; };
@@ -76,6 +78,8 @@
 		486E90C12C1FD0FC009FF728 /* MoveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveView.swift; sourceTree = "<group>"; };
 		48ABA9DB2C2103280067AFF4 /* ScrabbleGameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrabbleGameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48ABA9DD2C2103280067AFF4 /* ScrabbleGameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrabbleGameTests.swift; sourceTree = "<group>"; };
+		48ABA9E52C2103280067AFF4 /* ChipsOnFieldDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipsOnFieldDTO.swift; sourceTree = "<group>"; };
+		48ABA9E72C2103280067AFF4 /* MoveDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveDTO.swift; sourceTree = "<group>"; };
 		7D8BF6042C1E7C87006734FB /* ChipField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipField.swift; sourceTree = "<group>"; };
 		7D8BF6062C1E7D75006734FB /* ChipsOnField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipsOnField.swift; sourceTree = "<group>"; };
 		7D8BF6092C1E7DCC006734FB /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
@@ -166,6 +170,15 @@
 				48ABA9DD2C2103280067AFF4 /* ScrabbleGameTests.swift */,
 			);
 			path = ScrabbleGameTests;
+			sourceTree = "<group>";
+		};
+		48ABA9E42C2103280067AFF4 /* MoveDTO */ = {
+			isa = PBXGroup;
+			children = (
+				48ABA9E52C2103280067AFF4 /* ChipsOnFieldDTO.swift */,
+				48ABA9E72C2103280067AFF4 /* MoveDTO.swift */,
+			);
+			path = MoveDTO;
 			sourceTree = "<group>";
 		};
 		7D8BF6032C1E7C6F006734FB /* Chips */ = {
@@ -271,6 +284,7 @@
 		A9FBADC82C19E74D001D802F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				48ABA9E42C2103280067AFF4 /* MoveDTO */,
 				486E90A92C1F03B2009FF728 /* ScoreboardModel.swift */,
 				7D8BF6082C1E7DBA006734FB /* Chips */,
 				A9FBADC62C19E2D6001D802F /* GameRoom.swift */,
@@ -438,8 +452,10 @@
 				A9FBADC72C19E2D6001D802F /* GameRoom.swift in Sources */,
 				486E90BF2C1FD0FC009FF728 /* ChipsFieldViewModel.swift in Sources */,
 				A912A3022C1F53A8009B1091 /* AdminSettingsView.swift in Sources */,
+				48ABA9E62C2103280067AFF4 /* ChipsOnFieldDTO.swift in Sources */,
 				A9FBADB82C19DD66001D802F /* ContentView.swift in Sources */,
 				486E90B52C1F86A7009FF728 /* ChipsOnHand.swift in Sources */,
+				48ABA9E82C2103280067AFF4 /* MoveDTO.swift in Sources */,
 				A9CF05DB2C20A8F100793966 /* AdminSettingsViewModel.swift in Sources */,
 				7D8BF6072C1E7D75006734FB /* ChipsOnField.swift in Sources */,
 				7D8BF6052C1E7C87006734FB /* ChipField.swift in Sources */,

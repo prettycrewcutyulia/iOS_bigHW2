@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct MoveView: View {
-    var selectedCoordinate: [ChipsOnField]
+    var index = 0
+    @State var selectedCoordinate: [ChipsOnField]
     @State private var inputWord = ""
     @State private var inputChip = ""
     
@@ -37,10 +38,26 @@ struct MoveView: View {
                         .onSubmit {
                             // Проверяем, соответствует ли формат "буква,запятая,число"
                             let pattern = "^[A-Za-z],[0-9]+$"
-                            if let _ = inputChip.range(of: pattern, options: .regularExpression) {
+                            if let flag = inputChip.range(of: pattern, options: .regularExpression) {
                                 inputWord.append(inputChip)
+
+                                let result =  extractLetterAndNumber(from: inputChip)
+                                selectedCoordinate[index].chip = Chip(alpha: result.letter, point: result.number)
                                 if inputWord.count == selectedCoordinate.count {
-                                    print("отправить запрос")
+                                    Task {
+                                        do {
+                                            let isValid = try await NetworkService.shared.checkWord(word: inputWord)
+                                            if isValid {
+                                                let move = MoveDTO(
+                                                    gameId: UUID(uuidString: UserDefaultsService.shared.getCurrentGameId() ?? "") ?? UUID(),
+                                                    gamerId: UserDefaultsService.shared.getCurrentUserSafe()?.id ?? UUID(),
+                                                    startCoordinate: selectedCoordinate.first!.coordinate,
+                                                    stopCoordinate: selectedCoordinate.last!.coordinate,
+                                                    chips: selectedCoordinate.map { ChipsOnFieldDTO($0) })
+                                                try await NetworkService.shared.createMove(move: move)
+                                            }
+                                        }
+                                    }
                                 }
                             } else {
                                 inputChip = ""
@@ -54,5 +71,17 @@ struct MoveView: View {
                 }
             }
         }
+    }
+    
+    func extractLetterAndNumber(from input: String) -> (letter: String, number: Int) {
+        // Разделяем входную строку по запятой
+        let components = input.split(separator: ",")
+        
+        // Первый компонент - это буква, второй - число
+        let letter = String(components[0])
+        let number = Int(components[1])!
+        
+        // Возвращаем результат в виде кортежа
+        return (letter, number)
     }
 }

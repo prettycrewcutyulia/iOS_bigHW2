@@ -510,8 +510,45 @@ class NetworkService {
             throw error // Handle and rethrow errors more effectively.
         }
     }
-
+    
+    // MARK: Проверить слово
+    func checkWord(word: String) async throws -> Bool {
         
+        guard let url = URL(string: "\(localhost)/moves/checkWord/\(word)") else {
+            throw NetworkError.badURL
+        }
+
+        var request = URLRequest(url: url)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "GET"
+        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
+        request.addValue(authorization, forHTTPHeaderField: "Authorization")
+
+        do {
+            let (data, _) = try await URLSession.shared.data(for: request)
+            let result = try JSONDecoder().decode(Bool.self, from: data)
+            return result
+
+        } catch {
+            throw error // Handle and rethrow errors more effectively.
+        }
+    }
+
+    func createMove(move: MoveDTO) async throws {
+        guard let url = URL(string: "\(localhost)/moves/addMove") else {
+            throw NetworkError.badURL
+        }
+
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "POST"
+
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(move)
+        request.httpBody = data
+        
+        try await URLSession.shared.data(for: request)
+    }
 }
 
 struct GameRoomDTO: Codable {
