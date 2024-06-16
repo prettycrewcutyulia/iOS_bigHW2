@@ -70,7 +70,7 @@ struct AuthView: View {
             .navigationTitle("Login or Register")
             .background(
                 NavigationLink(
-                    destination: CreateGameRoomView(),
+                    destination: AllGameRoomsView(),
                     isActive: $viewModel.isLoggedIn
                 ) {
                     EmptyView()
