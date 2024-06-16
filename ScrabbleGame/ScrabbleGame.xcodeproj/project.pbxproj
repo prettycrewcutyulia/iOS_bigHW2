@@ -20,6 +20,7 @@
 		486E90BD2C1FC579009FF728 /* ChipOnHandViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90BC2C1FC579009FF728 /* ChipOnHandViewModel.swift */; };
 		486E90BF2C1FD0FC009FF728 /* ChipsFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90BE2C1FD0FC009FF728 /* ChipsFieldViewModel.swift */; };
 		486E90C22C1FD0FC009FF728 /* MoveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E90C12C1FD0FC009FF728 /* MoveView.swift */; };
+		48ABA9DE2C2103280067AFF4 /* ScrabbleGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ABA9DD2C2103280067AFF4 /* ScrabbleGameTests.swift */; };
 		7D8BF6052C1E7C87006734FB /* ChipField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6042C1E7C87006734FB /* ChipField.swift */; };
 		7D8BF6072C1E7D75006734FB /* ChipsOnField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6062C1E7D75006734FB /* ChipsOnField.swift */; };
 		7D8BF60A2C1E7DCC006734FB /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8BF6092C1E7DCC006734FB /* Coordinate.swift */; };
@@ -49,6 +50,16 @@
 		A9FBADD42C19F5B3001D802F /* GameRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FBADD32C19F5B3001D802F /* GameRoomView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		48ABA9DF2C2103280067AFF4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9FBADAA2C19DD66001D802F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A9FBADB12C19DD66001D802F;
+			remoteInfo = ScrabbleGame;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		486E90A42C1F02D5009FF728 /* ScoreboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreboardView.swift; sourceTree = "<group>"; };
 		486E90A72C1F02EC009FF728 /* ScoreboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreboardViewModel.swift; sourceTree = "<group>"; };
@@ -63,6 +74,8 @@
 		486E90BC2C1FC579009FF728 /* ChipOnHandViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipOnHandViewModel.swift; sourceTree = "<group>"; };
 		486E90BE2C1FD0FC009FF728 /* ChipsFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipsFieldViewModel.swift; sourceTree = "<group>"; };
 		486E90C12C1FD0FC009FF728 /* MoveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveView.swift; sourceTree = "<group>"; };
+		48ABA9DB2C2103280067AFF4 /* ScrabbleGameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrabbleGameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		48ABA9DD2C2103280067AFF4 /* ScrabbleGameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrabbleGameTests.swift; sourceTree = "<group>"; };
 		7D8BF6042C1E7C87006734FB /* ChipField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipField.swift; sourceTree = "<group>"; };
 		7D8BF6062C1E7D75006734FB /* ChipsOnField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipsOnField.swift; sourceTree = "<group>"; };
 		7D8BF6092C1E7DCC006734FB /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
@@ -95,6 +108,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		48ABA9D82C2103280067AFF4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9FBADAF2C19DD66001D802F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -138,6 +158,14 @@
 				486E90C12C1FD0FC009FF728 /* MoveView.swift */,
 			);
 			path = Move;
+			sourceTree = "<group>";
+		};
+		48ABA9DC2C2103280067AFF4 /* ScrabbleGameTests */ = {
+			isa = PBXGroup;
+			children = (
+				48ABA9DD2C2103280067AFF4 /* ScrabbleGameTests.swift */,
+			);
+			path = ScrabbleGameTests;
 			sourceTree = "<group>";
 		};
 		7D8BF6032C1E7C6F006734FB /* Chips */ = {
@@ -198,17 +226,11 @@
 			path = AdminSettings;
 			sourceTree = "<group>";
 		};
-		A9CF05DC2C20AD4200793966 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
 		A9FBADA92C19DD66001D802F = {
 			isa = PBXGroup;
 			children = (
 				A9FBADB42C19DD66001D802F /* ScrabbleGame */,
+				48ABA9DC2C2103280067AFF4 /* ScrabbleGameTests */,
 				A9FBADB32C19DD66001D802F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -217,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				A9FBADB22C19DD66001D802F /* ScrabbleGame.app */,
+				48ABA9DB2C2103280067AFF4 /* ScrabbleGameTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -224,7 +247,6 @@
 		A9FBADB42C19DD66001D802F /* ScrabbleGame */ = {
 			isa = PBXGroup;
 			children = (
-				A9CF05DC2C20AD4200793966 /* Tests */,
 				A912A2F32C1DE864009B1091 /* Enums.swift */,
 				A9FBADCA2C19E79C001D802F /* Views */,
 				A9FBADC92C19E763001D802F /* Services */,
@@ -308,6 +330,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		48ABA9DA2C2103280067AFF4 /* ScrabbleGameTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 48ABA9E12C2103280067AFF4 /* Build configuration list for PBXNativeTarget "ScrabbleGameTests" */;
+			buildPhases = (
+				48ABA9D72C2103280067AFF4 /* Sources */,
+				48ABA9D82C2103280067AFF4 /* Frameworks */,
+				48ABA9D92C2103280067AFF4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				48ABA9E02C2103280067AFF4 /* PBXTargetDependency */,
+			);
+			name = ScrabbleGameTests;
+			productName = ScrabbleGameTests;
+			productReference = 48ABA9DB2C2103280067AFF4 /* ScrabbleGameTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		A9FBADB12C19DD66001D802F /* ScrabbleGame */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A9FBADC12C19DD67001D802F /* Build configuration list for PBXNativeTarget "ScrabbleGame" */;
@@ -335,6 +375,10 @@
 				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
+					48ABA9DA2C2103280067AFF4 = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = A9FBADB12C19DD66001D802F;
+					};
 					A9FBADB12C19DD66001D802F = {
 						CreatedOnToolsVersion = 15.3;
 					};
@@ -354,11 +398,19 @@
 			projectRoot = "";
 			targets = (
 				A9FBADB12C19DD66001D802F /* ScrabbleGame */,
+				48ABA9DA2C2103280067AFF4 /* ScrabbleGameTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		48ABA9D92C2103280067AFF4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9FBADB02C19DD66001D802F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -371,6 +423,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		48ABA9D72C2103280067AFF4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48ABA9DE2C2103280067AFF4 /* ScrabbleGameTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9FBADAE2C19DD66001D802F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -418,7 +478,54 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		48ABA9E02C2103280067AFF4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A9FBADB12C19DD66001D802F /* ScrabbleGame */;
+			targetProxy = 48ABA9DF2C2103280067AFF4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		48ABA9E22C2103280067AFF4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = prettycrewcut.ScrabbleGameTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScrabbleGame.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ScrabbleGame";
+			};
+			name = Debug;
+		};
+		48ABA9E32C2103280067AFF4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = prettycrewcut.ScrabbleGameTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScrabbleGame.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ScrabbleGame";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		A9FBADBF2C19DD67001D802F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -610,6 +717,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		48ABA9E12C2103280067AFF4 /* Build configuration list for PBXNativeTarget "ScrabbleGameTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				48ABA9E22C2103280067AFF4 /* Debug */,
+				48ABA9E32C2103280067AFF4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A9FBADAD2C19DD66001D802F /* Build configuration list for PBXProject "ScrabbleGame" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
