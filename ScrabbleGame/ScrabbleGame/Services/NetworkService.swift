@@ -18,7 +18,7 @@ class NetworkService {
     // TODO: сюда нужно будет передавать api key и header для авторизации
     private let apiKey = "bc54b2ea-932a-48e0-abf9-27d023d3ee76"
     
-    private let authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI3ODFDMzU2OS1BOEU3LTQ0M0YtQTgzOC0yOTE0MTE3RjlCNzMiLCJleHAiOjE3MTg1NTE1NjguNTE3MDc5OH0.zOGVexaxLF0Z0eh4UnnE9xtvdTDLMA0gPXklOjXSBek"
+    private let authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTg1NjAxOTIuMzAxNTI5LCJ1c2VySUQiOiI3ODFDMzU2OS1BOEU3LTQ0M0YtQTgzOC0yOTE0MTE3RjlCNzMifQ.vBgQ9OWlfnPYeFdX1MDt6Ac6ACw-DhCZkQibcNx-OFE"
     
     // MARK: Создание игровой комнаты.
     func createGameRoom(adminNickname: String, roomCode: String?) async throws -> GameRoom {
@@ -146,6 +146,32 @@ class NetworkService {
         }
     }
     
+    // MARK: Получение всех игроков по комнате.
+    func getAllGamersIntoRoom(roomId: UUID) async throws -> [UUID]? {
+        guard let url = URL(string: "\(localhost)\(APIMethod.allGamers.rawValue)/\(roomId)/gamersIds") else {
+            throw NetworkError.badURL
+        }
+        
+        var request = URLRequest(url: url)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "GET"
+        
+        request.addValue(apiKey, forHTTPHeaderField: "ApiKey")
+        request.addValue(authorization, forHTTPHeaderField: "Authorization")
+        do {
+            let gamersResponce = try await URLSession.shared.data(for: request)
+            let gamersData = gamersResponce.0
+            
+            let decoder = JSONDecoder()
+            
+            let gamers = try decoder.decode([UUID].self, from: gamersData)
+            return gamers
+        }
+        catch {
+            return nil
+        }
+    }
+    
     // MARK: Добавление игрока в комнату
     func addGamerIntoRoom(gamerId: UUID, roomId: UUID) async throws -> Void {
         let dto = GamerRoomPairDTO(gamerId: gamerId, roomId: roomId)
@@ -215,6 +241,7 @@ struct GamerRoomPairDTO: Codable {
 enum APIMethod: String {
     case gameRooms = "/gameRooms"
     case leaveRoom = "/gamersIntoRoom/deleteGamer"
+    case allGamers = "/gamersIntoRoom/roomId"
 }
 
 enum NetworkError: Error {
