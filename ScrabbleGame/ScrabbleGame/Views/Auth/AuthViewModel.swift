@@ -83,6 +83,7 @@ class AuthViewModel: ObservableObject {
                     switch result {
                     case .success(let id, let token):
                         UserDefaultsService.shared.setCurrentUser(id: id, nickName: self.nickName, token: token,              password: self.password)
+                        NetworkService.shared.setAuthToken(token: token)
                         self.loginStatus = "Login successful"
                         self.isLoggedIn = true
                     case .error(let message):
