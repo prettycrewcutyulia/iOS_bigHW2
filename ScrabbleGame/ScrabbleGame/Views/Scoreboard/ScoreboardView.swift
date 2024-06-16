@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ScoreboardView: View {
-   @ObservedObject var viewModel: ScoreboardViewModel = ScoreboardViewModel()
+    @ObservedObject var viewModel: ScoreboardViewModel
 
     var body: some View {
         VStack(alignment: .center) {
@@ -52,8 +52,4 @@ struct ScoreboardView: View {
                     viewModel.onAppear()
                 }
     }
-}
-
-#Preview {
-    ScoreboardView()
 }

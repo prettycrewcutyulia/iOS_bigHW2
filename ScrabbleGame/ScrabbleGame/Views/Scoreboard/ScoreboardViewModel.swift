@@ -6,9 +6,15 @@
 //
 
 import Foundation
+import SwiftUI
 
 class ScoreboardViewModel: ObservableObject {
     @Published var scoreboardModels: [ScoreboardModel] = []
+    @Binding var isPresented: Bool
+    
+    init(isPresented: Binding<Bool>) {
+        self._isPresented = isPresented
+    }
     
     func onAppear() {
         // запрос в сервис
@@ -17,7 +23,7 @@ class ScoreboardViewModel: ObservableObject {
     }
     
     func onButtonDoneTap() {
-        // Закрыть экран
+        isPresented.toggle()
         print("Закрыть экран")
     }
 }
